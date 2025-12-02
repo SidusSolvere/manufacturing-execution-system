@@ -6,8 +6,8 @@ function Footer(){
   const linkStyle = " py-2 text-black/60 font-medium hover:text-black ";
 return(
 <>
-<div className='fixed bottom-0  left-0 w-full'>
-  <div className="flex gap-20  rounded-3xl m-4 p-4 shadow-2xl ">
+<div className='bottom-0 bg-gray-100 left-0 w-full shadow-2xl'>
+  <div className="flex gap-20  rounded-xl p-4 shadow-2xl ">
     <div className="flex w-[60%]">
       <h1 className="text-4xl text-blue-600 font-extrabold">MES</h1>
     </div>
