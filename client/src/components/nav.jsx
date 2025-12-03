@@ -14,9 +14,15 @@ const buttonStyle = "px-4 py-1 text-black/60 font-medium hover:text-black hover:
     <Link className={buttonStyle} to="/">Home</Link>
     <Link className={buttonStyle} to="/about">About</Link>
     <Link className={buttonStyle} to="/features">Features</Link>
+    <Link className={buttonStyle} to="/demo">Demo</Link>
     <Link className={buttonStyle} to="/contact">Contact</Link>
+    <Link className={buttonStyle} to="/companyRegister">Company Registration</Link>
     <Link className={buttonStyle} to="/login">Login</Link>
     <Link className={buttonStyle} to="/signup">Signup</Link>
+    
+    
+
+
     </div>
   </nav>
 </div>

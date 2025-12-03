@@ -8,7 +8,8 @@ import Contact from './pages/contact/contact.jsx';
 import Login from './pages/login/login.jsx';
 import Signup from './pages/signup/signup.jsx';
 import Features from './pages/features/features.jsx';
-
+import Register from './pages/registerCompany/registerCompany.jsx';
+import WorkPlace from './pages/mes/workPlace.jsx'
 
 
 function App() {
@@ -27,7 +28,8 @@ return(
               <Route path="/login" element={<Login/>}/>
               <Route path="/signup" element={<Signup/>}/>
               <Route path="/features" element={<Features/>}/>
-              
+              <Route path="/companyRegister" element={<Register/>}/>
+              <Route path="/demo" element={<WorkPlace/>}/>
             </Routes>
 
           </main>
