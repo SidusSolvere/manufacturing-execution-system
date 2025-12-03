@@ -5,7 +5,7 @@ function Nav(){
 const buttonStyle = "px-4 py-1 text-black/60 font-medium hover:text-black hover:bg-blue-600/50 hover:rounded-xl inline-block";
   return(
     <>
-    <div className='bg-gray-100 fixed w-full  '>
+    <div className='bg-gray-100  w-full  '>
   <nav className=' flex flex-wrap items-center justify-between  p-4 gap-6 border-default shadow-2xl rounded-xl '>
     <h1 className="text-4xl  text-blue-600 font-extrabold">
     MES 
