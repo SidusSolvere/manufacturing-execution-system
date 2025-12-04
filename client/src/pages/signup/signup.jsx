@@ -124,7 +124,7 @@ function Signup() {
 
           <button
             type="submit"
-            className="w-full px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700"
+            className="w-full px-4 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-150 cursor-pointer"
           >
             Create Account
           </button>
@@ -135,7 +135,7 @@ function Signup() {
           <p className="text-slate-600">
             Already have an account ?{" "}
             <Link
-              to="/companyRegister"
+              to="/login"
               className="text-blue-600 hover:text-blue-800 font-medium"
             >
               Log in            

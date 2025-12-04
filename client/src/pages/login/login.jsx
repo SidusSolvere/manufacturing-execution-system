@@ -9,7 +9,7 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Login:', { email, password });
+    console.log('Login:', { email});
   };
 
   return (
@@ -40,8 +40,8 @@ function Login() {
             <label className="flex items-center"><input type="checkbox" className="w-4 h-4" /><span className="ml-2 text-sm text-slate-600">Remember me</span></label>
             <a href="#" className="text-sm text-blue-600 hover:text-blue-800">Forgot password? </a>
           </div>
-
-          <button type="submit" className="w-full px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700">Sign In</button>
+       
+          <button type="submit" className="w-full px-4 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-150 cursor-pointer">Sign In</button>
         </form>
 
         <div className="bg-slate-50 px-8 py-4 border-t text-center">

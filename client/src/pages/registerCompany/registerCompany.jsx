@@ -1,28 +1,58 @@
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
 function Register() {
+  // 1. State Initialization (Individual states kept as requested)
   const [companyEmail, setCompanyEmail] = useState("");
   const [company, setCompany] = useState("");
-  const [ID, setID] = useState("");
+  // State for MES context: department dropdown selection and employee ID input
+  const [department, setDepartment] = useState("Select"); 
+  const [employeeId, setEmployeeId] = useState(""); 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  let companyExists=false;
+  let companyExists = false; // Flag maintained for existing logic
 
+  // 2. Submission & Validation Logic
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    if(department==="Select"){
+
+      alert("Please select the department!");
+      return;
+    }
+    // Password match check
+    if (password !== confirmPassword) {
+      alert("Passwords do not match.");
+      return;
+    }
+    // Company existence check
     if (companyExists) {
       alert("company already registered");
       return;
     }
-    console.log("Signup:", { companyEmail,company   });
+    
+    // Log new MES registration fields
+    console.log("Signup:", { companyEmail, company, department, employeeId });
+
+    // 3. Solution: Resetting all states after successful submission
+    setCompanyEmail("");
+    setCompany("");
+    setDepartment("Select"); // Reset to default value
+    setEmployeeId("");
+    setPassword("");
+    setConfirmPassword("");
+    setShowPassword(false);
+    setShowConfirmPassword(false);
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-gray-100 to-blue-200 flex items-center justify-center p-15">
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-white rounded-lg shadow-xl ">
+        
+        {/* Header Section */}
         <div className="bg-blue-600 text-white rounded-t-2xl p-8 text-center">
           <div className="w-16 h-16 bg-white rounded-lg flex items-center justify-center mx-auto mb-4">
             <span className="text-blue-600 text-2xl font-bold">MES</span>
@@ -30,116 +60,117 @@ function Register() {
           <h1 className="text-3xl font-bold">Register Company</h1>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-8 space-y-3">
-         
+        {/* Form Start */}
+        <form onSubmit={handleSubmit} className="p-8 space-y-4">
+          
+          {/* Company Name Input */}
           <div>
-            <label className="block text-sm font-medium text-slate-900 mb-2">
-              Company Name
-              <div className="relative group inline-block ">
-                <button className="px-1.5 py-0.25 m-1 bg-gray-600/50 text-white rounded-full font-bold text-xs">
-                  ?
-                </button>
-                <div
-                  className=" absolute w-128 left-1/2  mt-2 px-2 border-1 border-solid  bg-white text-gray-700 shadow-xl rounded-xl opacity-0  group-hover:opacity-100 transition duration-400">
+            <label className="block text-sm font-medium text-slate-900 mb-2">Company Name
+              {/* Tooltip */}
+              <div className="relative group inline-block "><button type="button" className="px-1.5 py-0.25 m-1 bg-gray-600/50 text-white rounded-full font-bold text-xs">?</button>
+                <div className=" absolute w-128 left-1/2 mt-2 px-2 border-1 border-solid bg-white text-gray-700 shadow-xl rounded-xl opacity-0 group-hover:opacity-100 transition duration-400 z-10">
                   <strong>Provide your official company name</strong> registered under any formal government authority
                 </div>
               </div>
             </label>
-            <input
-              type="text"
-              value={company}
-              onChange={(e) => setCompany(e.target.value)}
-              placeholder="Company"
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600 outline-none"
-              required
-            />
+            <input type="text" value={company} onChange={(e) => setCompany(e.target.value)} placeholder="Company Name" 
+              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600 outline-none" required />
           </div>
-           <div>
-            <label className="flex  text-sm font-medium text-slate-900 mb-2">
-              ID
-              <div className="relative group inline-block ">
-                <button className="px-1.5 py-0.25 m-1 bg-gray-600/50 text-white rounded-full font-bold text-xs">
-                  ?
-                </button>
-                <div
-                  className=" absolute w-128 left-1/2  mt-2 px-2 border-1 border-solid  bg-white text-gray-700 shadow-xl rounded-xl opacity-0  group-hover:opacity-100 transition duration-400"
-                >
-                  <strong>Provide your a company ID</strong>, it can be gstin, cin, or even your personal pan if your a small business owner 
+          
+          {/* Department Dropdown (MES ID STEP 1) */}
+          <div>
+            <label className="flex text-sm font-medium text-slate-900 mb-2">Department
+              {/* Tooltip */}
+              <div className="relative group inline-block "><button type="button" className="px-1.5 py-0.25 m-1 bg-gray-600/50 text-white rounded-full font-bold text-xs">?</button>
+                <div className=" absolute w-128 left-1/2 mt-2 px-2 border-1 border-solid bg-white text-gray-700 shadow-xl rounded-xl opacity-0 group-hover:opacity-100 transition duration-400 z-10">
+                  Select the department you work in (e.g., Production, Quality).
                 </div>
               </div>
-              
             </label>
-            <input
-              type="text"
-              value={ID}
-              onChange={(e) => setID(e.target.value)}
-              placeholder="you@company.com"
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600 outline-none"
-              required
-            />
+            <select name="department" value={department} onChange={(e) => setDepartment(e.target.value)} 
+              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600 outline-none" required>
+              <option value="Select">Select</option>
+              <option value="production">Production</option>
+              <option value="quality">Quality Assurance</option>
+              <option value="maintenance">Maintenance</option>
+              <option value="logistics">Logistics</option>
+              <option value="admin">Administration</option>
+            </select>
+          </div>
+          
+          {/* Employee ID Input (MES ID STEP 2) */}
+          <div>
+            <label className="flex text-sm font-medium text-slate-900 mb-2">Employee ID
+              {/* Tooltip */}
+              <div className="relative group inline-block "><button type="button" className="px-1.5 py-0.25 m-1 bg-gray-600/50 text-white rounded-full font-bold text-xs">?</button>
+                <div className=" absolute w-128 left-1/2 mt-2 px-2 border-1 border-solid bg-white text-gray-700 shadow-xl rounded-xl opacity-0 group-hover:opacity-100 transition duration-400 z-10">
+                  Enter your unique employee identification number or badge ID.
+                </div>
+              </div>
+            </label>
+            <input type="text" value={employeeId} onChange={(e) => setEmployeeId(e.target.value)} placeholder="e.g., EMP-12345"
+              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600 outline-none" required />
           </div>
 
+          {/* Company Email Input (Admin Contact) */}
           <div>
-            <label className="flex  text-sm font-medium text-slate-900 mb-2">
-              Company Email
-              <div className="relative group inline-block ">
-                <button className="px-1.5 py-0.25 m-1 bg-gray-600/50 text-white rounded-full font-bold text-xs">
-                  ?
-                </button>
-                <div
-                  className=" absolute w-128 left-1/2  mt-2 px-2 border-1 border-solid  bg-white text-gray-700 shadow-xl rounded-xl opacity-0  group-hover:opacity-100 transition duration-400"
-                >
-                  The provided company email will be only an admin, we will provide a super admin account on provided official email to your company once the registration is complete.
+            <label className="flex text-sm font-medium text-slate-900 mb-2">Company Email
+              {/* Tooltip */}
+              <div className="relative group inline-block "><button type="button" className="px-1.5 py-0.25 m-1 bg-gray-600/50 text-white rounded-full font-bold text-xs">?</button>
+                <div className=" absolute w-128 left-1/2 mt-2 px-2 border-1 border-solid bg-white text-gray-700 shadow-xl rounded-xl opacity-0 group-hover:opacity-100 transition duration-400 z-10">
+                  The provided company email will be only an admin...
                 </div>
               </div>
-              
             </label>
-            <input
-              type="email"
-              value={companyEmail}
-              onChange={(e) => setCompanyEmail(e.target.value)}
-              placeholder="CIN/PAN/MSME"
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600 outline-none"
-              required
-            />
-            <div>
-            <label className="block text-sm font-medium text-slate-900 mt-2 mb-2">Password</label>
+            <input type="email" value={companyEmail} onChange={(e) => setCompanyEmail(e.target.value)} placeholder="admin@company.com"
+              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600 outline-none" required />
+          </div>
+          
+          {/* Password Input */}
+          <div>
+            <label className="block text-sm font-medium text-slate-900 mb-2">Password</label>
             <div className="relative">
-              <input type={showPassword ? 'text' : 'password'} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600 outline-none" required />
+              <input type={showPassword ? 'text' : 'password'} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" 
+                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600 outline-none" required />
               <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-2.5 text-sm text-slate-600">{showPassword ? 'Hide' : 'Show'}</button>
             </div>
           </div>
 
+          {/* Confirm Password Input */}
           <div>
-            <label className="block text-sm font-medium text-slate-900 mt-2 mb-2">Confirm Password</label>
+            <label className="block text-sm font-medium text-slate-900 mb-2">Confirm Password</label>
             <div className="relative">
-              <input type={showConfirmPassword ? 'text' : 'password'} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="••••••••" className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600 outline-none" required />
-              <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-3 top-2.5 text-sm text-slate-600">{showConfirmPassword ?  'Hide' : 'Show'}</button>
+              <input type={showConfirmPassword ? 'text' : 'password'} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="••••••••" 
+                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600 outline-none" required />
+              <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-3 top-2.5 text-sm text-slate-600">{showConfirmPassword ? 'Hide' : 'Show'}</button>
             </div>
           </div>
-
-          </div>
           
-
-          <div className="flex justify-between">
+          {/* Terms Checkbox */}
+          <div className="flex justify-start">
             <label className="flex items-center">
               <input type="checkbox" className="w-4 h-4" required />
-              <span className="ml-2 text-sm text-slate-600">
-                I agree to terms
-              </span>
+              <span className="ml-2 text-sm text-slate-600">I agree to terms</span>
             </label>
           </div>
 
-          <button
-            type="submit"
-            className="w-full px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700"
-          >
+          {/* Submit Button (Cursor fix applied: added cursor-pointer class) */}
+          <button type="submit" className="w-full px-4 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-150 cursor-pointer">
             Register Company
           </button>
         </form>
 
+        {/* Footer */}
         <div className="bg-slate-50 px-8 py-4 border-t text-center rounded-b-2xl">
-          
+          <p className="text-slate-600">
+            Already have an account ?{" "}
+            <Link
+              to="/login"
+              className="text-blue-600 hover:text-blue-800 font-medium"
+            >
+              Log in            
+            </Link>
+          </p>
         </div>
       </div>
     </div>
