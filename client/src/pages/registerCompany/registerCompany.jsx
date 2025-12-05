@@ -5,9 +5,9 @@ function Register() {
   // 1. State Initialization (Individual states kept as requested)
   const [companyEmail, setCompanyEmail] = useState("");
   const [company, setCompany] = useState("");
-  // State for MES context: department dropdown selection and employee ID input
-  const [department, setDepartment] = useState("Select"); 
-  const [employeeId, setEmployeeId] = useState(""); 
+  // State for Company ID context: would be used for sorting through company data in
+  const [idType, setIdType] = useState("Select"); 
+  const [companyId, setCompanyId] = useState(""); 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [password, setPassword] = useState('');
@@ -18,9 +18,9 @@ function Register() {
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    if(department==="Select"){
+    if(idType==="Select"){
 
-      alert("Please select the department!");
+      alert("Please select the idType!");
       return;
     }
     // Password match check
@@ -35,13 +35,13 @@ function Register() {
     }
     
     // Log new MES registration fields
-    console.log("Signup:", { companyEmail, company, department, employeeId });
+    console.log("Signup:", { companyEmail, company, idType, companyId });
 
     // 3. Solution: Resetting all states after successful submission
     setCompanyEmail("");
     setCompany("");
-    setDepartment("Select"); // Reset to default value
-    setEmployeeId("");
+    setIdType("Select"); // Reset to default value
+    setCompanyId("");
     setPassword("");
     setConfirmPassword("");
     setShowPassword(false);
@@ -77,40 +77,37 @@ function Register() {
               className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600 outline-none" required />
           </div>
           
-          {/* Department Dropdown (MES ID STEP 1) */}
+
+         
+          
+          {/* Company ID Input (MES ID STEP 2) */}
           <div>
-            <label className="flex text-sm font-medium text-slate-900 mb-2">Department
+            <label className="flex text-sm font-medium text-slate-900 mb-2">Company ID
               {/* Tooltip */}
               <div className="relative group inline-block "><button type="button" className="px-1.5 py-0.25 m-1 bg-gray-600/50 text-white rounded-full font-bold text-xs">?</button>
                 <div className=" absolute w-128 left-1/2 mt-2 px-2 border-1 border-solid bg-white text-gray-700 shadow-xl rounded-xl opacity-0 group-hover:opacity-100 transition duration-400 z-10">
-                  Select the department you work in (e.g., Production, Quality).
+                  Enter your unique company ID and ID type
                 </div>
               </div>
             </label>
-            <select name="department" value={department} onChange={(e) => setDepartment(e.target.value)} 
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600 outline-none" required>
-              <option value="Select">Select</option>
-              <option value="production">Production</option>
-              <option value="quality">Quality Assurance</option>
-              <option value="maintenance">Maintenance</option>
-              <option value="logistics">Logistics</option>
-              <option value="admin">Administration</option>
+            <div className="flex ">
+            <input type="text" value={companyId} onChange={(e) => setCompanyId(e.target.value)} placeholder="CIN-123456789"
+              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600 outline-none" required />
+              <select name="idType" value={idType} onChange={(e) => setIdType(e.target.value)} 
+              className="w-[30%] px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600 outline-none" required>
+              <option value="Select">CIN</option>
+              <option value="production">GSTIN</option>
+              <option value="quality">PAN</option>
+              <option value="maintenance">TAN</option>
+              <option value="logistics">UDYAM Registration/MSME</option>
+              <option value="admin">FSSAI</option>
+              <option value="admin">IEC</option>
+              <option value="admin">LLPIN</option>
+              <option value="admin">Other</option>
             </select>
+            </div>
           </div>
           
-          {/* Employee ID Input (MES ID STEP 2) */}
-          <div>
-            <label className="flex text-sm font-medium text-slate-900 mb-2">Employee ID
-              {/* Tooltip */}
-              <div className="relative group inline-block "><button type="button" className="px-1.5 py-0.25 m-1 bg-gray-600/50 text-white rounded-full font-bold text-xs">?</button>
-                <div className=" absolute w-128 left-1/2 mt-2 px-2 border-1 border-solid bg-white text-gray-700 shadow-xl rounded-xl opacity-0 group-hover:opacity-100 transition duration-400 z-10">
-                  Enter your unique employee identification number or badge ID.
-                </div>
-              </div>
-            </label>
-            <input type="text" value={employeeId} onChange={(e) => setEmployeeId(e.target.value)} placeholder="e.g., EMP-12345"
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600 outline-none" required />
-          </div>
 
           {/* Company Email Input (Admin Contact) */}
           <div>
