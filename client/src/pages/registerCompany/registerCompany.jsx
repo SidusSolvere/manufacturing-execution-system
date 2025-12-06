@@ -85,7 +85,7 @@ function Register() {
             <label className="flex text-sm font-medium text-slate-900 mb-2">Company ID
               {/* Tooltip */}
               <div className="relative group inline-block "><button type="button" className="px-1.5 py-0.25 m-1 bg-gray-600/50 text-white rounded-full font-bold text-xs">?</button>
-                <div className=" absolute w-128 left-1/2 mt-2 px-2 border-1 border-solid bg-white text-gray-700 shadow-xl rounded-xl opacity-0 group-hover:opacity-100 transition duration-400 z-10">
+                <div className=" absolute w-128 left-1/2 mt-2 px-2 border border-solid bg-white text-gray-700 shadow-xl rounded-xl opacity-0 group-hover:opacity-100 transition duration-400 z-10">
                   Enter your unique company ID and ID type
                 </div>
               </div>

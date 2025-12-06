@@ -6,4 +6,8 @@ export const initialEdges = [
     type: "step",
     label: "connects with",
   },
+  { id: "n2-n3",
+     type: "custom-edge",
+      source: "n2", 
+      target: "n3" },
 ];
