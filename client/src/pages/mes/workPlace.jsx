@@ -1,5 +1,7 @@
 import { useState, useCallback } from "react";
 import Inventory from "../../nodes/inventory";
+import Processing from "../../nodes/processing";
+import QualityCheck from "../../nodes/qualityCheck";
 
 import {
   ReactFlow,
@@ -15,7 +17,11 @@ import { initialNodes } from "./nodes";
 import { initialEdges } from "./edges";
 import CustomEdge from "../../nodes/customEdge";
 
-const nodeTypes = { inventory: Inventory };
+const nodeTypes = { 
+  inventory: Inventory,
+  processing: Processing,
+  qualityCheck: QualityCheck
+};
 const edgeTypes = { "custom-edge": CustomEdge };
 
 export default function WorkPlace() {
