@@ -103,3 +103,4 @@ function Inventory({ id, data }) {
 }
 
 export default Inventory;
+ 

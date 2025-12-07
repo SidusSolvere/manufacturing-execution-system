@@ -15,6 +15,7 @@ import "@xyflow/react/dist/style.css";
 import { initialNodes } from "./nodes";
 import { initialEdges } from "./edges";
 import CustomEdge from "../../nodes/customEdge";
+import Sidebar from "./siebar";
 
 const nodeTypes = { 
   inventory: Inventory,
@@ -47,9 +48,7 @@ export default function WorkPlace() {
 
   return (
     <div className="h-full w-full">
-      <div className="flex absolute z-10 ">
-       
-      </div>
+              <Sidebar/>
       <ReactFlow
         nodes={nodes}
         nodeTypes={nodeTypes}
