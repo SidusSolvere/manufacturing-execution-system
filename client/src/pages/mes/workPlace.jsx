@@ -48,7 +48,8 @@ export default function WorkPlace() {
 
   return (
     <div className="h-full w-full">
-              <Sidebar/>
+      
+             
       <ReactFlow
         nodes={nodes}
         nodeTypes={nodeTypes}
@@ -59,6 +60,7 @@ export default function WorkPlace() {
         onConnect={onConnect}
         edgeTypes={edgeTypes}
       >
+         <Sidebar/>
         <Background />
         <Controls />
       </ReactFlow>
