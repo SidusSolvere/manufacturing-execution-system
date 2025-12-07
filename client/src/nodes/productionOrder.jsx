@@ -28,7 +28,7 @@ function ProductionOrder({ id, data }) {
   );
   const onQuantityUpdate = useCallback(
     (evt) => {
-      const newValue = evt.target.value;
+      const newValue = Number(evt.target.value);
       setQuantity(newValue);
 
       setNodes((nodes) =>

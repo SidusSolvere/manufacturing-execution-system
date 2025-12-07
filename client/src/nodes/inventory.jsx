@@ -19,7 +19,7 @@ function Inventory({ id, data }) {
 
   const onUpdate = useCallback(
     (evt) => {
-      const newValue = Number(evt.target.value); // FIX: was evt.target.amount
+      const newValue = Number(evt.target.value); 
 
       setQuantity(newValue);
 
@@ -39,7 +39,7 @@ function Inventory({ id, data }) {
   //so basically this updates the nodes array 
 
   const onUnitChange = (evt) => {
-    const newUnit = evt.target.value; // FIX: was evt.target.amount
+    const newUnit = evt.target.value; 
     setUnit(newUnit);
 
     const multiplier = UNITS[newUnit].amount;
@@ -64,18 +64,18 @@ function Inventory({ id, data }) {
             type="number"
             id="number"
             name="number"
-            value={quantity} // FIX: was amount={quantity}
+            value={quantity} 
             onChange={onUpdate}
             className="nodrag border-2 border-solid rounded-[5px]"
           />
 
           <select
-            value={unit} // FIX: was amount={unit}
+            value={unit} 
             onChange={onUnitChange}
             className="nodrag border-2 border-solid rounded-[5px] font-bold"
           >
             {Object.entries(UNITS).map(([key, obj]) => (
-              <option key={key} value={key}> {/* FIX: was amount={key} */}
+              <option key={key} value={key}>
                 {obj.label}
               </option>
             ))}

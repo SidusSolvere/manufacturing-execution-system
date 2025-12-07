@@ -4,28 +4,22 @@ import { useReactFlow } from "@xyflow/react";
 function Sidebar() {
   const [open, setOpen] = useState(false);
   const toggle = () => setOpen(!open);
-  const { setNodes } = useReactFlow();//to get the node values from the node array
+  const { setNodes, getEdges } = useReactFlow(); // getEdges added
 
-  // this value must be 1+the max value of default nodes array, will add functionality to get previous id later, for now its 1 as nodes.jsx is empty
+  // this value must be 1+the max value of default nodes array, will add functionality to get previous id later
   const idIncrement = useRef(1);
 
-  const addNode = (type, x = 100, y = 100) => {//default values will add popup to change the position
+  const addNode = (type, x = 100, y = 100) => {
     const newId = idIncrement.current;
     idIncrement.current += 1;
 
-    let defaultData = {};//check default data and node format from node.json
-
+    let defaultData = {};
     if (type === "inventory") {
       defaultData = { amount: 0 };
-
     } else if (type === "productionOrder") {
-      defaultData = {
-        name: "",
-        quantity: 1,
-        startDate: "",
-        endDate: "",
-      };
-
+      defaultData = { name: "", quantity: 1, startDate: "", endDate: "" };
+    } else if (type === "parts") {
+      defaultData = { amount: 0, pn: "", sku: "",total:0 ,name :""};
     } else {
       alert(`no type named ${type}`);
       return;
@@ -34,15 +28,14 @@ function Sidebar() {
     setNodes((prevNodes) => {
       const updatedNodes = [
         ...prevNodes,
-        {
-          id: String(newId), // string as recommended id type is string in documentation
-          type: type,
-          position: { x, y },
-          data: defaultData,
-        },
-      ];//main function to add the node to the array, the array is handled by react flow internally so no need to worry about updating it and so on 
+        { id: String(newId), type, position: { x, y }, data: defaultData },
+      ];
 
-      console.log("Updated nodes:", updatedNodes); //check the array 
+      console.log("Updated nodes:", updatedNodes);
+
+      const edges = getEdges(); // get current edges array
+      console.log("Current edges:", edges);
+
       return updatedNodes;
     });
   };
@@ -73,6 +66,10 @@ function Sidebar() {
             <button onClick={() => addNode("inventory", 300, 150)}>
               Inventory
             </button>
+          </li>
+
+          <li className="px-4 my-4 rounded-2xl font-medium hover:bg-gray-200">
+            <button onClick={() => addNode("parts", 400, 200)}>Parts</button>
           </li>
         </ul>
       </div>
