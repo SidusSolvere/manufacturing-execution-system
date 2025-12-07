@@ -1,7 +1,5 @@
 import { useState, useCallback } from "react";
 import Inventory from "../../nodes/inventory";
-import Processing from "../../nodes/processing";
-import QualityCheck from "../../nodes/qualityCheck";
 
 import {
   ReactFlow,
@@ -16,12 +14,11 @@ import "@xyflow/react/dist/style.css";
 import { initialNodes } from "./nodes";
 import { initialEdges } from "./edges";
 import CustomEdge from "../../nodes/customEdge";
+import Sidebar from "./siebar";
 
 const nodeTypes = { 
   inventory: Inventory,
-  processing: Processing,
-  qualityCheck: QualityCheck
-};
+
 const edgeTypes = { "custom-edge": CustomEdge };
 
 export default function WorkPlace() {
@@ -48,9 +45,8 @@ export default function WorkPlace() {
 
   return (
     <div className="h-full w-full">
-      <div className="flex absolute z-10 ">
-       
-      </div>
+      
+             
       <ReactFlow
         nodes={nodes}
         nodeTypes={nodeTypes}
@@ -61,6 +57,7 @@ export default function WorkPlace() {
         onConnect={onConnect}
         edgeTypes={edgeTypes}
       >
+         <Sidebar/>
         <Background />
         <Controls />
       </ReactFlow>
