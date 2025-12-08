@@ -18,36 +18,36 @@ function Signup() {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-gray-100 to-blue-200 flex items-center justify-center p-15">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-xl ">
-        <div className="bg-blue-600 text-white rounded-t-2xl p-8 text-center">
-          <div className="w-16 h-16 bg-white rounded-lg flex items-center justify-center mx-auto mb-4">
-            <span className="text-blue-600 text-2xl font-bold">MES</span>
+    <div className="min-h-screen bg-linear-to-br from-gray-100 to-blue-200 flex items-center justify-center px-4 py-8 sm:py-12">
+      <div className="w-full max-w-sm md:max-w-md bg-white rounded-lg shadow-xl">
+        <div className="bg-blue-600 text-white rounded-t-2xl p-6 md:p-8 text-center">
+          <div className="w-12 md:w-16 h-12 md:h-16 bg-white rounded-lg flex items-center justify-center mx-auto mb-3 md:mb-4">
+            <span className="text-blue-600 text-xl md:text-2xl font-bold">MES</span>
           </div>
-          <h1 className="text-3xl font-bold">Create Account</h1>
+          <h1 className="text-2xl md:text-3xl font-bold">Create Account</h1>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-8 space-y-3">
+        <form onSubmit={handleSubmit} className="p-6 md:p-8 space-y-3">
           <div>
-            <label className="block text-sm font-medium text-slate-900 mb-2"></label>
+            <label className="block text-xs md:text-sm font-medium text-slate-900 mb-1 md:mb-2"></label>
             <input
               type="text"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
               placeholder="Full Name"
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600 outline-none"
+              className="w-full px-3 md:px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600 outline-none text-sm md:text-base"
               required
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-900 mb-2">
+            <label className="block text-xs md:text-sm font-medium text-slate-900 mb-1 md:mb-2">
               Company
-              <div className="relative group inline-block ">
-                <button className="px-1.5 py-0.25 m-1 bg-gray-600/50 text-white rounded-full font-bold text-xs">
+              <div className="relative group inline-block">
+                <button type="button" className="px-1.5 py-0.5 md:py-1 m-1 bg-gray-600/50 text-white rounded-full font-bold text-xs">
                   ?
                 </button>
                 <div
-                  className=" absolute w-128 left-1/2  mt-2 px-2 border-1 border-solid  bg-white text-gray-700 shadow-xl rounded-xl opacity-0  group-hover:opacity-100 transition duration-400"
+                  className="absolute w-48 md:w-56 left-1/2 mt-2 px-2 border border-solid bg-white text-gray-700 shadow-xl rounded-xl opacity-0 group-hover:opacity-100 transition duration-400 text-xs md:text-sm"
                 >
                   <strong>Provide your company name</strong> so your account can
                   be verified by your company admin and you gain access to the
@@ -61,44 +61,43 @@ function Signup() {
               value={company}
               onChange={(e) => setCompany(e.target.value)}
               placeholder="Company"
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600 outline-none"
+              className="w-full px-3 md:px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600 outline-none text-sm md:text-base"
               required
             />
           </div>
 
           <div>
-            <label className="flex  text-sm font-medium text-slate-900 mb-2">
+            <label className="flex text-xs md:text-sm font-medium text-slate-900 mb-1 md:mb-2">
               Company Email
-              <div className="relative group inline-block ">
-                <button className="px-1.5 py-0.25 m-1 bg-gray-600/50 text-white rounded-full font-bold text-xs">
+              <div className="relative group inline-block">
+                <button type="button" className="px-1.5 py-0.5 md:py-1 m-1 bg-gray-600/50 text-white rounded-full font-bold text-xs">
                   ?
                 </button>
                 <div
-                  className=" absolute w-128 left-1/2  mt-2 px-2 border-1 border-solid  bg-white text-gray-700 shadow-xl rounded-xl opacity-0  group-hover:opacity-100 transition duration-400"
+                  className="absolute w-48 md:w-56 left-1/2 mt-2 px-2 border border-solid bg-white text-gray-700 shadow-xl rounded-xl opacity-0 group-hover:opacity-100 transition duration-400 text-xs md:text-sm"
                 >
                   <strong>Provide your company email</strong>, the admin can only approve you via your company email, you will recieve your passkey there, if not registered then<Link to="/companyregister"> register your company </Link>
                 </div>
               </div>
-              
             </label>
             <input
               type="email"
               value={companyEmail}
               onChange={(e) => setCompanyEmail(e.target.value)}
               placeholder="you@company.com"
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600 outline-none"
+              className="w-full px-3 md:px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600 outline-none text-sm md:text-base"
               required
             />
           </div>
           <div>
-            <label className="flex  text-sm font-medium text-slate-900 mb-2">
+            <label className="flex text-xs md:text-sm font-medium text-slate-900 mb-1 md:mb-2">
               Personal Email&nbsp;<p className="text-black/60">(optional)</p>
-               <div className="relative group inline-block ">
-                <button className="px-1.5 py-0.25 m-1 bg-gray-600/50 text-white rounded-full font-bold text-xs">
+              <div className="relative group inline-block">
+                <button type="button" className="px-1.5 py-0.5 md:py-1 m-1 bg-gray-600/50 text-white rounded-full font-bold text-xs">
                   ?
                 </button>
                 <div
-                  className=" absolute w-128 left-1/2  mt-2 px-2 border-1 border-solid  bg-white text-gray-700 shadow-xl rounded-xl opacity-0  group-hover:opacity-100 transition duration-400"
+                  className="absolute w-48 md:w-56 left-1/2 mt-2 px-2 border border-solid bg-white text-gray-700 shadow-xl rounded-xl opacity-0 group-hover:opacity-100 transition duration-400 text-xs md:text-sm"
                 >
                   Personal email if provided will act as a secondary means of contact, personal emails need to be approved by the company 
                 </div>
@@ -109,7 +108,7 @@ function Signup() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600 outline-none"
+              className="w-full px-3 md:px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600 outline-none text-sm md:text-base"
             />
           </div>
 
@@ -124,15 +123,15 @@ function Signup() {
 
           <button
             type="submit"
-            className="w-full px-4 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-150 cursor-pointer"
+            className="w-full px-3 md:px-4 py-2 md:py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-150 cursor-pointer text-sm md:text-base"
           >
             Create Account
           </button>
         </form>
 
         
-        <div className="bg-slate-50 px-8 py-4 border-t text-center rounded-b-2xl">
-          <p className="text-slate-600">
+        <div className="bg-slate-50 px-6 md:px-8 py-3 md:py-4 border-t text-center rounded-b-2xl">
+          <p className="text-xs md:text-sm text-slate-600">
             Already have an account ?{" "}
             <Link
               to="/login"
@@ -142,8 +141,8 @@ function Signup() {
             </Link>
           </p>
         </div>
-         <div className="bg-slate-50 px-8 py-4  text-center rounded-b-2xl">
-          <p className="text-slate-600">
+        <div className="bg-slate-50 px-6 md:px-8 py-3 md:py-4 text-center rounded-b-2xl">
+          <p className="text-xs md:text-sm text-slate-600">
             Company not registered ?{" "}
             <Link
               to="/companyRegister"
