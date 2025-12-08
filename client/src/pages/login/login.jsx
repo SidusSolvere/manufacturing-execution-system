@@ -12,7 +12,7 @@ function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-blue-200 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-linear-to-br from-gray-100 to-blue-200 flex items-center justify-center p-4">
       <div className="w-full max-w-sm md:max-w-md bg-white rounded-lg shadow-xl overflow-hidden">
         <div className="bg-blue-600 text-white rounded-t-lg p-6 md:p-8 text-center">
           <div className="w-12 md:w-16 h-12 md:h-16 bg-white rounded-lg flex items-center justify-center mx-auto mb-4">
