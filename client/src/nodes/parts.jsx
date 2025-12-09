@@ -2,139 +2,135 @@ import {
   Position,
   Handle,
   useReactFlow,
-  useNodes,
-  useEdges,
+  useNodeConnections,
+  useNodesData,
 } from "@xyflow/react";
-import { useCallback, useState, useEffect } from "react";
+import { useEffect, useReducer } from "react";
+import DeleteButton from "./deleteNode";
 
 function Parts({ id, data }) {
   const { setNodes } = useReactFlow();
-  const nodes = useNodes(); // are used in dependency arry to re render the componet when any of the other nodes are changed, causes a lot of unnecessary re renders so need to filter out stuff in the depenedncy array later
-  const edges = useEdges();
-  const [quantity, setQuantity] = useState(data?.amount || 0);
-  const [pn, setPN] = useState(data?.pn || ""); //product number as uinque id for the produict
-  const [sku, setSKU] = useState(data?.sku || ""); //sku for warehouse intergration later
-  const [name, setName] = useState(data?.name || ""); //name of part
-  const [total, setTotal] = useState(0); //total is production order * parts quantity
-  const onUpdateQuantity = useCallback(
-    (evt) => {
-      const newValue = Number(evt.target.value);
-      setQuantity(newValue);
-      setNodes((nodes) =>
-        nodes.map((node) =>
-          node.id === id
-            ? { ...node, data: { ...node.data, amount: newValue } }
-            : node
-        )
-      );
-    },
-    [id, setNodes]
-  );
-  const onUpdatePN = useCallback(
-    (evt) => {
-      const newValue = evt.target.value;
-      setPN(newValue);
-      setNodes((nodes) =>
-        nodes.map((node) =>
-          node.id === id
-            ? { ...node, data: { ...node.data, pn: newValue } }
-            : node
-        )
-      );
-    },
-    [id, setNodes]
-  );
-  const onUpdateSKU = useCallback(
-    (evt) => {
-      const newValue = evt.target.value;
-      setSKU(newValue);
-      setNodes((nodes) =>
-        nodes.map((node) =>
-          node.id === id
-            ? { ...node, data: { ...node.data, sku: newValue } }
-            : node
-        )
-      );
-    },
-    [id, setNodes]
-  );
 
-  const onUpdateName = useCallback(
-    (evt) => {
-      const newValue = evt.target.value;
-      setName(newValue);
-      setNodes((nodes) =>
-        nodes.map((node) =>
-          node.id === id
-            ? { ...node, data: { ...node.data, name: newValue } }
-            : node
-        )
-      );
-    },
-    [id, setNodes]
-  );
+  const connections = useNodeConnections(id);
+
+  const sourceId = connections.find((c) => c.target === id)?.source;
+
+  const sourceData = useNodesData(sourceId);
+
+  const poAmount = Number(sourceData?.data?.quantity || 0);
+
+  const initial = {
+    pn: data?.pn || "",
+    amount: data?.amount || 0,
+    totalRequired: data?.totalRequired || 0,
+    sku: data?.sku || "",
+    unitCost: data?.unitCost || 0,
+    totalCost: data?.totalCost || 0,
+    name: data?.name || "",
+  };
+
+  function reducer(state, action) {
+    return { ...state, ...action };
+  }
+
+  const [state, dispatch] = useReducer(reducer, initial);
+
+  const updateNodeData = (patch) => {
+    setNodes((ns) =>
+      ns.map((n) => (n.id === id ? { ...n, data: { ...n.data, ...patch } } : n))
+    );
+  };
 
   useEffect(() => {
-    //used here to re render whenever there is a change so total value will always be updated and is also connected to the production order node
-    const connectedEdge = edges.find((edge) => edge.target === id); //find production order edge
-    if (!connectedEdge) {
-      setTotal(0);
-      return;
-    }
+    const totalRequired = Number(state.amount) * poAmount;
+    const totalCost = totalRequired * Number(state.unitCost);
 
-    const sourceNode = nodes.find((node) => node.id === connectedEdge.source); //find production order node
+    dispatch({ totalRequired, totalCost });
 
-    if (sourceNode.type !== "productionOrder") {
-      //if not connected to PO node then gives a warning
-      setTotal(0);
-      alert("not connected to Production order");
-      return;
-    }
-    const poQuantity = Number(sourceNode.data.quantity || 0);
-    setTotal(quantity * poQuantity);
-  }, [quantity, nodes, edges, id]); //dependency array for updates
+    updateNodeData({
+      ...state,
+      totalRequired,
+      totalCost,
+    });
+  }, [state.amount, state.unitCost, poAmount]);
+
+  const onChange = (field) => (e) => {
+    const value =
+      field === "amount" || field === "unitCost"
+        ? Number(e.target.value)
+        : e.target.value;
+
+    dispatch({ [field]: value });
+    updateNodeData({ [field]: value });
+  };
+
   return (
-    <div className="">
-      <div className="p-4 bg-white rounded-2xl shadow-lg flex flex-col">
-        <label className="text-center">Parts</label>
+    <div>
+      <div className="p-4 bg-white rounded-2xl shadow-lg flex flex-col gap-3">
+        <label className="text-center font-semibold">Parts</label>
+
         <div className="flex flex-col">
-          <label>Name: </label>
+          <label>Name:</label>
           <input
-          type="text"
-          value={name}
-          onChange={onUpdateName}
-          className="nodrag border-2 rounded p-1"
-        />
+            type="text"
+            value={state.name}
+            onChange={onChange("name")}
+            className="nodrag border-2 rounded p-1"
+          />
+          <DeleteButton/>
         </div>
-        <div className="flex">
+
+        <div className="flex gap-3">
           <div className="flex flex-col">
-            <label>Quantity:</label>
+            <label>Amount:</label>
             <input
               type="number"
-              value={quantity}
-              onChange={onUpdateQuantity}
-              className="nodrag border-2 border-solid rounded-[5px] p-1"
+              value={state.amount}
+              onChange={onChange("amount")}
+              className="nodrag border-2 rounded p-1"
             />
           </div>
+
           <div className="flex flex-col">
             <label>Total Required:</label>
-            <label className="nodrag border-2 rounded p-1">{total}</label>
+            <label className="nodrag border-2 rounded p-1 bg-gray-100">
+              {state.totalRequired}
+            </label>
+          </div>
+        </div>
+
+        <div className="flex gap-3">
+          <div className="flex flex-col">
+            <label>Unit Cost:</label>
+            <input
+              type="number"
+              value={state.unitCost}
+              onChange={onChange("unitCost")}
+              className="nodrag border-2 rounded p-1"
+            />
+          </div>
+
+          <div className="flex flex-col">
+            <label>Total Cost:</label>
+            <label className="nodrag border-2 rounded p-1 bg-gray-100">
+              {state.totalCost}
+            </label>
           </div>
         </div>
 
         <label>PN:</label>
         <input
           type="text"
-          value={pn}
-          onChange={onUpdatePN}
+          value={state.pn}
+          onChange={onChange("pn")}
           className="nodrag border-2 rounded p-1"
         />
 
         <label>SKU:</label>
         <input
           type="text"
-          value={sku}
-          onChange={onUpdateSKU}
+          value={state.sku}
+          onChange={onChange("sku")}
           className="nodrag border-2 rounded p-1"
         />
 

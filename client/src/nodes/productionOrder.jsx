@@ -1,131 +1,118 @@
-// you can copy this template for most nodes
 import { Handle, Position, useReactFlow } from "@xyflow/react";
-import { useCallback, useState } from "react";
+import { useReducer, useCallback } from "react";
+import DeleteButton from "./deleteNode";
 
 function ProductionOrder({ id, data }) {
   const { setNodes } = useReactFlow();
 
-  const [name, setName] = useState(data?.name || "");
-  const [quantity, setQuantity] = useState(data?.quantity || "");
-  const [startDate, setStartDate] = useState(data.startDate || "");
-  const [endDate, setEndDate] = useState(data.endDate || "");
+  function reducer(state, action) {
+    switch (action.type) {
+      case "updateField":
+        return { ...state, [action.field]: action.value };
+      default:
+        return state;
+    }
+  }
 
-  const onUpdate = useCallback(
-    (evt) => {
-      const newValue = evt.target.value;
+  const initialState = {
+    itemName: data?.itemName || "",
+    quantity: data?.quantity || 1,
+    startDate: data?.startDate || "",
+    endDate: data?.endDate || "",
+    customerName: data?.customerName || "",
+    status: data?.status || "",
+  };
 
-      setName(newValue);
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  const updateNodeData = useCallback(
+    (field, value) => {
+      dispatch({ type: "updateField", field, value });
 
       setNodes((nodes) =>
         nodes.map((node) =>
           node.id === id
-            ? { ...node, data: { ...node.data, name: newValue } }
+            ? { ...node, data: { ...node.data, [field]: value } }
             : node
         )
       );
     },
     [id, setNodes]
-  );
-  const onQuantityUpdate = useCallback(
-    (evt) => {
-      const newValue = Number(evt.target.value);
-      setQuantity(newValue);
-
-      setNodes((nodes) =>
-        nodes.map((node) =>
-          node.id === id
-            ? { ...node, data: { ...node.data, quantity: newValue } }
-            : node
-        )
-      );
-    },
-    [id, setNodes]
-  );
-
-  const onStartDateUpdate = useCallback(
-    (evt)=>{
-      const newValue=evt.target.value;
-      setStartDate(newValue);
-      setNodes((nodes) =>
-        nodes.map((node) =>
-          node.id === id
-            ? { ...node, data: { ...node.data, startDate: newValue } }
-            : node
-        )
-      );
-    },[id,setNodes]
-  );
-  const onEndDateUpdate = useCallback(
-    (evt)=>{
-      const newValue=evt.target.value;
-      setEndDate(newValue);
-      setNodes((nodes) =>
-        nodes.map((node) =>
-          node.id === id
-            ? { ...node, data: { ...node.data, endDate: newValue } }
-            : node
-        )
-      );
-    },[id,setNodes]
   );
 
   return (
-    <div className="p-4 bg-white rounded-2xl shadow-lg">
-      <div className="flex">
-      <div className="flex flex-col">
-        <label htmlFor="text">Production Order:</label>
+    <div className="p-4 bg-gray-100 rounded-2xl shadow-lg ">
+
+      <div className="flex gap-4">
+        <div className="flex flex-col">
+          <label>Item Name:</label>
           <input
             type="text"
-            id="text"
-            value={name}
-            onChange={onUpdate}
-            className="nodrag m-2 border-2 border-solid rounded-[5px]"
+            value={state.itemName}
+            onChange={(e) => updateNodeData("itemName", e.target.value)}
+            className="nodrag m-2 border rounded p-1"
           />
-                            </div>
+        </div>
 
+        <div className="flex flex-col">
+          <label>Quantity:</label>
+          <input
+            type="number"
+            value={state.quantity}
+            onChange={(e) => updateNodeData("quantity", Number(e.target.value))}
+            className="nodrag m-2 border rounded p-1 w-20"
+          />
+        </div>
+        <div>
+          <DeleteButton/>
+        </div>
+      </div>
 
-          <div className="flex flex-col">
-          <label htmlFor="quantity">Quantity: </label>
-            <input
-              type="number"
-              id="quantity"
-              value={quantity}
-              onChange={onQuantityUpdate}
-              placeholder="Quantity"
-              className="nodrag m-2 border-2 border-solid rounded-[5px] w-20
-            "
-            />
-            </div>
-</div>
-<div className="flex">
-      <div className="flex flex-col">
-            <label htmlFor="startDate">Start: </label>
-            <input
-              type="date"
-              id="startDate"
-              value={startDate}
-              onChange={onStartDateUpdate}
-              className="nodrag m-2 border-2 border-solid rounded-[5px]
-            "
-            />
-            </div>
-                  <div className="flex flex-col">
+      <div className="flex gap-4">
+        <div className="flex flex-col">
+          <label>Start Date:</label>
+          <input
+            type="date"
+            value={state.startDate}
+            onChange={(e) => updateNodeData("startDate", e.target.value)}
+            className="nodrag m-2 border rounded p-1"
+          />
+        </div>
 
-            <label htmlFor="endDate">End: </label>
-            <input
-              type="date"
-              id="endDate"
-              value={endDate}
-              onChange={onEndDateUpdate}
-              className="nodrag m-2 border-2 border-solid rounded-[5px] 
-            "
-            />
-                        </div>
+        <div className="flex flex-col">
+          <label>End Date:</label>
+          <input
+            type="date"
+            value={state.endDate}
+            onChange={(e) => updateNodeData("endDate", e.target.value)}
+            className="nodrag m-2 border rounded p-1"
+          />
+        </div>
+      </div>
 
-            </div>
-      
-       
-        <Handle type="source" position={Position.Right} />
+      <div className="flex gap-4">
+        <div className="flex flex-col">
+          <label>Customer:</label>
+          <input
+            type="text"
+            value={state.customerName}
+            onChange={(e) => updateNodeData("customerName", e.target.value)}
+            className="nodrag m-2 border rounded p-1"
+          />
+        </div>
+
+        <div className="flex flex-col">
+          <label>Status:</label>
+          <input
+            type="text"
+            value={state.status}
+            onChange={(e) => updateNodeData("status", e.target.value)}
+            className="nodrag m-2 border rounded p-1"
+          />
+        </div>
+      </div>
+
+      <Handle type="source" className="scale-200" position={Position.Right} />
     </div>
   );
 }

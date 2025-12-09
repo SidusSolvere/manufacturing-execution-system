@@ -1,47 +1,44 @@
 import { useState, useRef } from "react";
 import { useReactFlow } from "@xyflow/react";
+import nodeTemplates from "../../nodes/initialNodes";
 
 function Sidebar() {
   const [open, setOpen] = useState(false);
   const toggle = () => setOpen(!open);
-  const { setNodes, getEdges } = useReactFlow(); // getEdges added
 
-  // this value must be 1+the max value of default nodes array, will add functionality to get previous id later
+  const { setNodes, getEdges } = useReactFlow();
+
   const idIncrement = useRef(1);
 
   const addNode = (type, x = 100, y = 100) => {
-    const newId = idIncrement.current;
-    idIncrement.current += 1;
-
-    let defaultData = {};
-    if (type === "inventory") {
-      defaultData = { amount: 0 };
-    } else if (type === "productionOrder") {
-      defaultData = { name: "", quantity: 1, startDate: "", endDate: "" };
-    } else if (type === "parts") {
-      defaultData = { amount: 0, pn: "", sku: "",total:0 ,name :""};
-    } else {
-      alert(`no type named ${type}`);
+    if (!nodeTemplates[type]) {
+      alert(`Node type "${type}" is not valid`);
       return;
     }
+
+    const newId = idIncrement.current++;
+    const defaultData = JSON.parse(JSON.stringify(nodeTemplates[type].data));
 
     setNodes((prevNodes) => {
       const updatedNodes = [
         ...prevNodes,
-        { id: String(newId), type, position: { x, y }, data: defaultData },
+        {
+          id: String(newId),
+          type,
+          position: { x, y },
+          data: defaultData,
+        },
       ];
 
       console.log("Updated nodes:", updatedNodes);
-
-      const edges = getEdges(); // get current edges array
-      console.log("Current edges:", edges);
+      console.log("Edges:", getEdges());
 
       return updatedNodes;
     });
   };
 
   return (
-    <div className="absolute z-10">
+    <div className="relative z-10">
       <button
         className="bg-gray-100 text-xl font-bold text-blue-800 rounded-b-2xl p-4 shadow-2xl mx-4 hover:bg-gray-200"
         onClick={toggle}
@@ -51,9 +48,7 @@ function Sidebar() {
 
       <div
         className="bg-gray-100 w-60 shadow-2xl absolute transition-all duration-600 z-10 rounded-2xl px-8"
-        style={{
-          left: open ? "0" : "-200%",
-        }}
+        style={{ left: open ? "0" : "-200%" }}
       >
         <ul>
           <li className="px-4 my-4 rounded-2xl font-medium hover:bg-gray-200">
@@ -70,6 +65,24 @@ function Sidebar() {
 
           <li className="px-4 my-4 rounded-2xl font-medium hover:bg-gray-200">
             <button onClick={() => addNode("parts", 400, 200)}>Parts</button>
+          </li>
+
+          <li className="px-4 my-4 rounded-2xl font-medium hover:bg-gray-200">
+            <button onClick={() => addNode("processing", 500, 250)}>
+              Processing
+            </button>
+          </li>
+
+          <li className="px-4 my-4 rounded-2xl font-medium hover:bg-gray-200">
+            <button onClick={() => addNode("assembly", 600, 300)}>
+              Assembly
+            </button>
+          </li>
+
+          <li className="px-4 my-4 rounded-2xl font-medium hover:bg-gray-200">
+            <button onClick={() => addNode("finalProduct", 700, 350)}>
+              Final Product
+            </button>
           </li>
         </ul>
       </div>
