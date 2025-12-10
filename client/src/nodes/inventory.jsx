@@ -41,7 +41,8 @@ function Inventory({ id, data }) {
   const multiplier = UNITS[state.unit].amount;
   const finalStock = state.currentStock * multiplier;
   const effectiveStock = finalStock * (1 - state.reservedStock / 100);
-  const status = effectiveStock - totalRequired >= 0 ? "Sufficient" : "Insufficient";
+  const status =
+    effectiveStock - totalRequired >= 0 ? "Sufficient" : "Insufficient";
 
   const updateNode = useCallback(
     (patch) => {
@@ -66,42 +67,42 @@ function Inventory({ id, data }) {
 
   return (
     <div className="p-4 bg-white rounded-2xl shadow-lg">
-      <DeleteButton/>
+      <DeleteButton />
       <div className="flex flex-col">
         <label>Inventory</label>
 
-          <input
-            type="number"
-            value={state.currentStock}
-            onChange={(e) => dispatch({ currentStock: Number(e.target.value) })}
-            className="nodrag border-2 rounded-[5px]"
-          />
+        <input
+          type="number"
+          value={state.currentStock}
+          onChange={(e) => dispatch({ currentStock: Number(e.target.value) })}
+          className="nodrag border-2 rounded-[5px]"
+        />
 
-          <select
-            value={state.unit}
-            onChange={(e) => dispatch({ unit: e.target.value })}
-            className="nodrag border-2 rounded-[5px] font-bold"
-          >
-            {Object.entries(UNITS).map(([key, obj]) => (
-              <option key={key} value={key}>
-                {obj.label}
-              </option>
-            ))}
-          </select>
+        <select
+          value={state.unit}
+          onChange={(e) => dispatch({ unit: e.target.value })}
+          className="nodrag border-2 rounded-[5px] font-bold"
+        >
+          {Object.entries(UNITS).map(([key, obj]) => (
+            <option key={key} value={key}>
+              {obj.label}
+            </option>
+          ))}
+        </select>
 
-          <label>Reserve %</label>
-          <input
-            type="number"
-            value={state.reservedStock}
-            onChange={(e) => dispatch({ reservedStock: Number(e.target.value) })}
-            className="nodrag border-2 rounded-[5px] w-[70px]"
-          />
+        <label>Reserve %</label>
+        <input
+          type="number"
+          value={state.reservedStock}
+          onChange={(e) => dispatch({ reservedStock: Number(e.target.value) })}
+          className="nodrag border-2 rounded-[5px] w-[70px]"
+        />
 
-          <label>Status: {status}</label>
-        </div>
+        <label>Status: {status}</label>
+      </div>
 
-        <Handle type="source" position={Position.Right} />
-        <Handle type="target" position={Position.Left} />
+      <Handle type="source" position={Position.Right} />
+      <Handle type="target" position={Position.Left} />
     </div>
   );
 }

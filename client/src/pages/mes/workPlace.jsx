@@ -3,6 +3,8 @@ import Inventory from "../../nodes/inventory";
 import ProductionOrder from "../../nodes/productionOrder";
 import Parts from "../../nodes/parts";
 import Processing from "../../nodes/processing";
+import Assembly from "../../nodes/assembly";
+import FinalProduct from "../../nodes/finalProduct";
 
 import { backgroundColor } from "./backgroundTheme/background";
 import { color } from "./backgroundTheme/color";
@@ -29,6 +31,8 @@ const nodeTypes = {
   productionOrder: ProductionOrder,
   parts: Parts,
   processing: Processing,
+  assembly: Assembly,
+  finalProduct:FinalProduct,
 };
 
 const edgeTypes = { "custom-edge": CustomEdge };
@@ -78,7 +82,6 @@ export default function WorkPlace() {
 
   return (
     <div ref={fullscreenRef} className="h-full w-full relative">
-
       {!isFull && (
         <button
           onClick={handleFullscreen}
@@ -113,7 +116,7 @@ export default function WorkPlace() {
           setColorKey={setColorKey}
           variantKey={variantKey}
           setVariantKey={setVariantKey}
-        /> 
+        />
 
         <Background
           color={color[colorKey]}

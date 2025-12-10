@@ -27,6 +27,7 @@ function Processing({ id, data }) {
     totalProcessingCost: data?.totalProcessingCost || 0,
     time: data?.time || "",
     total: data?.total || 0,
+    totalTimeHours: data?.totalTimeHours || 0,
   };
   function reducer(state, action) {
     return { ...state, ...action };
@@ -63,121 +64,123 @@ function Processing({ id, data }) {
 
   const sourceId = connections.find((c) => c.target === id)?.source;
   const targetId = connections.find((c) => c.source === id)?.target;
-const targetData=useNodesData(targetId);
+  const targetData = useNodesData(targetId);
   const sourceData = useNodesData(sourceId);
-useEffect(() => {
-  if (!sourceData || sourceData.type !== "inventory") return;
+  useEffect(() => {
+    if (!sourceData || sourceData.type !== "inventory") return;
 
-  const total = sourceData.data.totalRequired;
+    const total = sourceData.data.totalRequired;
 
-  const rate = Number(state.rateUnitsPerHour);
-  const hoursPerDay = Number(state.hoursPerDay);
-  const daysPerWeek = Number(state.daysPerWeek);
-  const setupMinutes = Number(state.setupTimeMin);
+    const rate = Number(state.rateUnitsPerHour);
+    const hoursPerDay = Number(state.hoursPerDay);
+    const daysPerWeek = Number(state.daysPerWeek);
+    const setupMinutes = Number(state.setupTimeMin);
 
-  if (!rate || !hoursPerDay || !daysPerWeek) return;
+    if (!rate || !hoursPerDay || !daysPerWeek) return;
 
-  let totalTimeHours = total / rate;
-  totalTimeHours += setupMinutes / 60;
+    let totalTimeHours = total / rate;
+    totalTimeHours += setupMinutes / 60;
 
-  const weeklyHours = hoursPerDay * daysPerWeek;
-  const weeks = Math.floor(totalTimeHours / weeklyHours);
+    const weeklyHours = hoursPerDay * daysPerWeek;
+    const weeks = Math.floor(totalTimeHours / weeklyHours);
 
-  let remainingHours = totalTimeHours - weeks * weeklyHours;
+    let remainingHours = totalTimeHours - weeks * weeklyHours;
 
-  const days = Math.floor(remainingHours / hoursPerDay);
-  remainingHours -= days * hoursPerDay;
+    const days = Math.floor(remainingHours / hoursPerDay);
+    remainingHours -= days * hoursPerDay;
 
-  const hours = Math.floor(remainingHours);
-  const minutes = Math.round((remainingHours - hours) * 60);
+    const hours = Math.floor(remainingHours);
+    const minutes = Math.round((remainingHours - hours) * 60);
 
-  const time = `${weeks} weeks ${days} days ${hours} hours ${minutes} minutes`;
+    const time = `${weeks} weeks ${days} days ${hours} hours ${minutes} minutes`;
 
-  let status = "";
+    let status = "";
 
-  if (targetData && targetData.type === "processing") {
-    const targetRate = Number(targetData.data.rateUnitsPerHour);
+    if (targetData && targetData.type === "processing") {
+      const targetRate = Number(targetData.data.rateUnitsPerHour);
 
-    if (targetRate > rate) {
-      status = "Bottleneck in this node";
+      if (targetRate > rate) {
+        status = "Bottleneck in this node";
+      }
     }
-  }
 
-  if (status) {
-    dispatch({ time, total, status });
+    if (status) {
+      dispatch({ time, total, status, totalTimeHours });
+      updateNodeData({
+        ...state,
+        time,
+        total,
+        status,
+        totalTimeHours,
+      });
+    } else {
+      dispatch({ time, total, totalTimeHours });
+      updateNodeData({
+        ...state,
+        time,
+        total,
+        totalTimeHours,
+      });
+    }
+  }, [
+    state.daysPerWeek,
+    state.hoursPerDay,
+    state.rateUnitsPerHour,
+    state.setupTimeMin,
+    sourceData?.data?.totalRequired,
+    targetData?.data?.rateUnitsPerHour,
+  ]);
+
+  useEffect(() => {
+    if (!sourceData || sourceData.type !== "processing") return;
+
+    const total = Number(sourceData.data.total);
+    const sourceRate = Number(sourceData.data.rateUnitsPerHour);
+    const nodeRate = Number(state.rateUnitsPerHour);
+    const hoursPerDay = Number(state.hoursPerDay);
+    const daysPerWeek = Number(state.daysPerWeek);
+    const setupMinutes = Number(state.setupTimeMin);
+
+    if (!total || !hoursPerDay || !daysPerWeek || !nodeRate) return;
+
+    const effectiveRate = sourceRate <= nodeRate ? sourceRate : nodeRate;
+
+    let totalTimeHours = total / effectiveRate;
+    totalTimeHours += setupMinutes / 60;
+
+    const weeklyHours = hoursPerDay * daysPerWeek;
+    const weeks = Math.floor(totalTimeHours / weeklyHours);
+
+    let remainingHours = totalTimeHours - weeks * weeklyHours;
+
+    const days = Math.floor(remainingHours / hoursPerDay);
+    remainingHours -= days * hoursPerDay;
+
+    const hours = Math.floor(remainingHours);
+    const minutes = Math.round((remainingHours - hours) * 60);
+
+    const time = `${weeks} weeks ${days} days ${hours} hours ${minutes} minutes`;
+
+    let status = "";
+    if (sourceRate < nodeRate) status = "Bottleneck in previous node";
+    else if (sourceRate > nodeRate) status = "Bottleneck in this node";
+
+    dispatch({ time, total, status, totalTimeHours });
+
     updateNodeData({
       ...state,
       time,
       total,
       status,
+      totalTimeHours,
     });
-  } else {
-    dispatch({ time, total });
-    updateNodeData({
-      ...state,
-      time,
-      total,
-    });
-  }
-}, [
-  state.daysPerWeek,
-  state.hoursPerDay,
-  state.rateUnitsPerHour,
-  state.setupTimeMin,
-  sourceData?.data?.totalRequired,
-  targetData?.data?.rateUnitsPerHour,
-]);
-
-useEffect(() => {
-  if (!sourceData || sourceData.type !== "processing") return;
-
-  const total = Number(sourceData.data.total);
-  const sourceRate = Number(sourceData.data.rateUnitsPerHour);
-  const nodeRate = Number(state.rateUnitsPerHour);
-  const hoursPerDay = Number(state.hoursPerDay);
-  const daysPerWeek = Number(state.daysPerWeek);
-  const setupMinutes = Number(state.setupTimeMin);
-
-  if (!total || !hoursPerDay || !daysPerWeek || !nodeRate) return;
-
-  const effectiveRate =
-    sourceRate <= nodeRate ? sourceRate : nodeRate;
-
-  let totalTimeHours = total / effectiveRate;
-  totalTimeHours += setupMinutes / 60; 
-
-  const weeklyHours = hoursPerDay * daysPerWeek;
-  const weeks = Math.floor(totalTimeHours / weeklyHours);
-
-  let remainingHours = totalTimeHours - weeks * weeklyHours;
-
-  const days = Math.floor(remainingHours / hoursPerDay);
-  remainingHours -= days * hoursPerDay;
-
-  const hours = Math.floor(remainingHours);
-  const minutes = Math.round((remainingHours - hours) * 60);
-
-  const time = `${weeks} weeks ${days} days ${hours} hours ${minutes} minutes`;
-
-  let status = "";
-  if (sourceRate < nodeRate) status = "Bottleneck in previous node";
-  else if (sourceRate > nodeRate) status = "Bottleneck in this node";
-
-  dispatch({ time, total, status });
-
-  updateNodeData({
-    ...state,
-    time,
-    total,
-    status,
-  });
-}, [
-  state.daysPerWeek,
-  state.hoursPerDay,
-  state.rateUnitsPerHour,
-  state.setupTimeMin,
-  sourceData?.data?.totalRequired,  
-]);
+  }, [
+    state.daysPerWeek,
+    state.hoursPerDay,
+    state.rateUnitsPerHour,
+    state.setupTimeMin,
+    sourceData?.data?.totalRequired,
+  ]);
 
   return (
     <>

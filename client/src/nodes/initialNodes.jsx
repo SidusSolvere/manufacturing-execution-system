@@ -15,7 +15,7 @@ const nodeTemplates = {
       currentStock: 0,
       reservedStock: 0,
       status: "",
-      total:0,
+      total: 0,
     },
   },
 
@@ -46,8 +46,9 @@ const nodeTemplates = {
       machineCostPerHour: 0,
       laborCostPerHour: 0,
       totalProcessingCost: 0,
+      totalTimeHours: 0,
       time: "",
-      total:0,
+      total: 0,
     },
   },
 
@@ -57,8 +58,6 @@ const nodeTemplates = {
       unitsPerHr: 0,
       hoursPerDay: 0,
       daysPerWeek: 0,
-      qualityCheck: false,
-      qualityPass: "",
       machineCostPerHour: 0,
       laborCostPerHour: 0,
       assemblyCost: 0,

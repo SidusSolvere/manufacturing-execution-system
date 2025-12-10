@@ -77,7 +77,7 @@ function Parts({ id, data }) {
             onChange={onChange("name")}
             className="nodrag border-2 rounded p-1"
           />
-          <DeleteButton/>
+          <DeleteButton />
         </div>
 
         <div className="flex gap-3">
