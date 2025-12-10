@@ -37,7 +37,6 @@ export default function WorkPlace() {
   const [nodes, setNodes] = useState(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
 
-  // ⭐ THEME STATE (must exist here)
   const [bgColorKey, setBgColorKey] = useState("white");
   const [colorKey, setColorKey] = useState("dark");
   const [variantKey, setVariantKey] = useState("dots");
@@ -114,7 +113,7 @@ export default function WorkPlace() {
           setColorKey={setColorKey}
           variantKey={variantKey}
           setVariantKey={setVariantKey}
-        />
+        /> 
 
         <Background
           color={color[colorKey]}

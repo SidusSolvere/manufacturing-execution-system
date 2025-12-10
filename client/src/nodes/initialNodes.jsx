@@ -46,7 +46,7 @@ const nodeTemplates = {
       machineCostPerHour: 0,
       laborCostPerHour: 0,
       totalProcessingCost: 0,
-      time: 0,
+      time: "",
       total:0,
     },
   },

@@ -70,7 +70,6 @@ function Inventory({ id, data }) {
       <div className="flex flex-col">
         <label>Inventory</label>
 
-        <div className="flex gap-2">
           <input
             type="number"
             value={state.currentStock}
@@ -103,7 +102,6 @@ function Inventory({ id, data }) {
 
         <Handle type="source" position={Position.Right} />
         <Handle type="target" position={Position.Left} />
-      </div>
     </div>
   );
 }

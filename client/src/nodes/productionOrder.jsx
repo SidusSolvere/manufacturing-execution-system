@@ -41,7 +41,7 @@ function ProductionOrder({ id, data }) {
   );
 
   return (
-    <div className="p-4 bg-gray-100 rounded-2xl shadow-lg ">
+    <div className="p-4 bg-gray-50 rounded-3xl shadow-2xl ">
 
       <div className="flex gap-4">
         <div className="flex flex-col">
