@@ -1,5 +1,5 @@
 import { useReactFlow, useNodeId } from "@xyflow/react";
-
+import { CircleX } from 'lucide-react';
 export default function DeleteButton() {
   const { deleteElements, getNode } = useReactFlow();
   const nodeId = useNodeId();   
@@ -14,9 +14,11 @@ export default function DeleteButton() {
   return (
     <button
       onClick={handleDelete}
-      className="px-3 py-1 mt-2 bg-red-500 text-white rounded hover:bg-red-600"
+      className="bg-black/20 backdrop-blur-xs text-white font-semibold rounded-full  hover:bg-black/50 "
     >
-      X
+         <CircleX />
+
+
     </button>
   );
 }

@@ -7,13 +7,15 @@ import {
 } from "@xyflow/react";
 import { useCallback, useReducer, useEffect } from "react";
 import DeleteButton from "./deleteNode";
+import { CircleChevronRight } from "lucide-react";
+
 
 const UNITS = {
-  box: { label: "Box (100 pieces)", amount: 100 },
-  carton: { label: "Carton (12 Boxes)", amount: 1200 },
-  roll: { label: "Roll (500 meters)", amount: 500 },
-  pallet: { label: "Pallet (50 Cartons)", amount: 60000 },
-  drum: { label: "Drum (200 Litres)", amount: 200 },
+  box: { label: "Box", amount: 100 },
+  carton: { label: "Carton", amount: 1200 },
+  roll: { label: "Roll", amount: 500 },
+  pallet: { label: "Pallet", amount: 60000 },
+  drum: { label: "Drum", amount: 200 },
 };
 
 const initialState = (data) => ({
@@ -66,16 +68,23 @@ function Inventory({ id, data }) {
   }, [state, totalRequired]);
 
   return (
-    <div className="p-4 bg-white rounded-2xl shadow-lg">
-      <DeleteButton />
-      <div className="flex flex-col">
-        <label>Inventory</label>
-
+    <div className=" bg-blue-500 rounded-3xl shadow-2xl ">
+      <div>
+              <h1 className="p-4 text-xl font-semibold  text-white rounded-t-3xl">Inventory</h1> 
+      
+            </div>
+             <div className="absolute right-4 top-4">
+                <DeleteButton/>
+              </div>
+      <div className="p-4 bg-white rounded-2xl shadow-lg flex flex-col gap-3">
+        <div className="flex flex-col">
+<lable>Amount:</lable>
+<div className="flex">
         <input
           type="number"
           value={state.currentStock}
           onChange={(e) => dispatch({ currentStock: Number(e.target.value) })}
-          className="nodrag border-2 rounded-[5px]"
+          className="nodrag border-2 rounded-[5px] w-30"
         />
 
         <select
@@ -89,20 +98,42 @@ function Inventory({ id, data }) {
             </option>
           ))}
         </select>
-
+        </div>
+        </div>
+<div className="flex">
+  <div className="flex flex-col p-1">
         <label>Reserve %</label>
         <input
           type="number"
           value={state.reservedStock}
           onChange={(e) => dispatch({ reservedStock: Number(e.target.value) })}
           className="nodrag border-2 rounded-[5px] w-[70px]"
-        />
-
-        <label>Status: {status}</label>
+        /></div>
+<div className="flex flex-col p-1">
+        <label>Status: </label>
+        <label className="rounded-full bg-gray-400 px-3 text-white">{status}</label>
+        </div>
       </div>
-
-      <Handle type="source" position={Position.Right} />
-      <Handle type="target" position={Position.Left} />
+</div>
+      <Handle type="source" position={Position.Right}style={{
+          background: 'none',
+          border: 'none',
+          width: '1em',
+          height: '1em',
+          
+        }} >
+        <CircleChevronRight className="bg-gray-50  rounded-full hover:bg-gray-300 hover:scale-105"/>
+      </Handle>
+      <Handle type="target" position={Position.Left} style={{
+          background: 'none',
+          border: 'none',
+          width: '1em',
+          height: '1em',
+          left:'-.5em'
+          
+        }} >
+        <CircleChevronRight className="bg-gray-50  rounded-full hover:bg-gray-300 hover:scale-105"/>
+      </Handle>
     </div>
   );
 }

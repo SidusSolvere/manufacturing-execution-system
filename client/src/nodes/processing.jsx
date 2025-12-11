@@ -5,23 +5,27 @@ import {
   useNodeConnections,
   useNodesData,
 } from "@xyflow/react";
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer,useState } from "react";
 import DeleteButton from "./deleteNode";
+import { ChevronDown, CircleChevronRight } from "lucide-react";
+
 
 function Processing({ id, data }) {
   const { setNodes } = useReactFlow();
+  const [toggle,setToggle]=useState(false);
+  
 
   const initialState = {
     processName: data?.processName || "",
     machineId: data?.machineId || "",
     rateUnitsPerHour: data?.rateUnitsPerHour || 0,
     inputRate: data?.inputRate || 0,
-    setupTimeMin: data?.setupTimeMin || 0,
-    operatorCount: data?.operatorCount || 0,
+    setupTimeMin: data?.setupTimeMin || 60,
+    operatorCount: data?.operatorCount || 1,
     operatorSkill: data?.operatorSkill || "",
-    status: data?.status || "",
-    hoursPerDay: data?.hoursPerDay || 0,
-    daysPerWeek: data?.daysPerWeek || 0,
+    status: data?.status || "Null",
+    hoursPerDay: data?.hoursPerDay || 8,
+    daysPerWeek: data?.daysPerWeek || 5,
     machineCostPerHour: data?.machineCostPerHour || 0,
     laborCostPerHour: data?.laborCostPerHour || 0,
     totalProcessingCost: data?.totalProcessingCost || 0,
@@ -184,10 +188,16 @@ function Processing({ id, data }) {
 
   return (
     <>
-      <div>
-        <div className="p-4 bg-white rounded-2xl shadow-lg flex flex-col gap-3">
-          <label className="text-center font-semibold">Processing</label>
-
+    <div className=" bg-blue-500 rounded-3xl shadow-2xl ">
+       < div>
+                <h1 className="p-4 text-xl font-semibold  text-white rounded-t-3xl">
+                  Processing
+                </h1>
+              </div>
+              <div className="absolute right-4 top-4">
+                <DeleteButton />
+              </div>
+              <div className="p-4 bg-white rounded-2xl shadow-lg flex flex-col gap-3">
           <div className="flex flex-col">
             <label>Process Name:</label>
             <input
@@ -196,7 +206,7 @@ function Processing({ id, data }) {
               onChange={onChange("processName")}
               className="nodrag border-2 rounded p-1"
             />
-            <DeleteButton />
+            
           </div>
 
           <div className="flex gap-3">
@@ -208,7 +218,6 @@ function Processing({ id, data }) {
                 onChange={onChange("machineId")}
                 className="nodrag border-2 rounded p-1"
               />
-              <label>Status: {status}</label>
             </div>
 
             <div className="flex flex-col">
@@ -221,7 +230,25 @@ function Processing({ id, data }) {
               />
             </div>
           </div>
-
+          <div className="flex">
+            <div>
+                          <label>Status:<div className="rounded-full bg-gray-400 px-3 text-white">{state.status}</div></label>
+                          </div>
+                          <div><button
+  onClick={() => setToggle(!toggle)}
+  className={` transition-transform duration-600 
+    ${toggle ? "rotate-180" : "rotate-0"}
+  `}
+>
+  <ChevronDown />
+</button></div>
+</div>
+<div
+  className={`
+    transition-all duration-600 overflow-hidden
+    ${toggle ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"}
+  `}
+>
           <div className="flex gap-3">
             <div className="flex flex-col">
               <label>Setup Time (min):</label>
@@ -304,12 +331,7 @@ function Processing({ id, data }) {
               {state.totalProcessingCost}
             </label>
           </div>
-          <div className="flex flex-col">
-            <label>Status:</label>
-            <label className="nodrag border-2 rounded p-1 bg-gray-100">
-              {state.status}
-            </label>
-          </div>
+          
 
           <div className="flex flex-col">
             <label>Total Time (hours):</label>
@@ -317,9 +339,28 @@ function Processing({ id, data }) {
               {state.time}
             </label>
           </div>
+          </div>
 
-          <Handle type="source" position={Position.Right} />
-          <Handle type="target" position={Position.Left} />
+          <Handle type="source" position={Position.Right} style={{
+          background: 'none',
+          border: 'none',
+          width: '1em',
+          height: '1em',
+          
+        }} >
+        <CircleChevronRight className="bg-gray-50  rounded-full hover:bg-gray-300 hover:scale-105"/>
+      </Handle>
+          <Handle type="target" position={Position.Left} style={{
+          background: 'none',
+          border: 'none',
+          width: '1em',
+          height: '1em',
+                              left:'-.5em'
+
+          
+        }} >
+        <CircleChevronRight className="bg-gray-50  rounded-full hover:bg-gray-300 hover:scale-105"/>
+      </Handle>
         </div>
       </div>
     </>

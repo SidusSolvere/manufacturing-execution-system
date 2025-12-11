@@ -19,6 +19,7 @@ import {
   applyEdgeChanges,
   applyNodeChanges,
   addEdge,
+  MiniMap,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 
@@ -109,6 +110,7 @@ export default function WorkPlace() {
         onConnect={onConnect}
         edgeTypes={edgeTypes}
       >
+        <MiniMap  ></MiniMap>
         <Ribbon
           bgColorKey={bgColorKey}
           setBgColorKey={setBgColorKey}

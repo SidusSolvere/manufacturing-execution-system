@@ -57,6 +57,11 @@ function Sidebar() {
             </button>
           </li>
 
+          
+
+          <li className="px-4 my-4 rounded-2xl font-medium hover:bg-gray-200">
+            <button onClick={() => addNode("parts", 400, 200)}>Parts</button>
+          </li>
           <li className="px-4 my-4 rounded-2xl font-medium hover:bg-gray-200">
             <button onClick={() => addNode("inventory", 300, 150)}>
               Inventory
@@ -64,14 +69,11 @@ function Sidebar() {
           </li>
 
           <li className="px-4 my-4 rounded-2xl font-medium hover:bg-gray-200">
-            <button onClick={() => addNode("parts", 400, 200)}>Parts</button>
-          </li>
-
-          <li className="px-4 my-4 rounded-2xl font-medium hover:bg-gray-200">
             <button onClick={() => addNode("processing", 500, 250)}>
               Processing
             </button>
           </li>
+          
 
           <li className="px-4 my-4 rounded-2xl font-medium hover:bg-gray-200">
             <button onClick={() => addNode("assembly", 600, 300)}>

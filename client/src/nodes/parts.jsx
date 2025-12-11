@@ -5,11 +5,13 @@ import {
   useNodeConnections,
   useNodesData,
 } from "@xyflow/react";
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
 import DeleteButton from "./deleteNode";
+import { ChevronDown, CircleChevronRight } from "lucide-react";
 
 function Parts({ id, data }) {
   const { setNodes } = useReactFlow();
+  const [toggle, setToggle] = useState(false);
 
   const connections = useNodeConnections(id);
 
@@ -65,23 +67,39 @@ function Parts({ id, data }) {
   };
 
   return (
-    <div>
+    <div className=" bg-blue-500 rounded-3xl shadow-2xl ">
+      <div>
+        <h1 className="p-4 text-xl font-semibold  text-white rounded-t-3xl">
+          Parts
+        </h1>
+      </div>
+      <div className="absolute right-4 top-4">
+        <DeleteButton />
+      </div>
       <div className="p-4 bg-white rounded-2xl shadow-lg flex flex-col gap-3">
-        <label className="text-center font-semibold">Parts</label>
 
-        <div className="flex flex-col">
-          <label>Name:</label>
-          <input
-            type="text"
-            value={state.name}
-            onChange={onChange("name")}
-            className="nodrag border-2 rounded p-1"
-          />
-          <DeleteButton />
+        <div className="flex">
+          <div className="flex flex-col w-full pr-2">
+            <label>Name:</label>
+            <input
+              type="text"
+              value={state.name}
+              onChange={onChange("name")}
+              className="nodrag border-2 rounded p-1"
+            />
+          </div>
+          <button
+            onClick={() => setToggle(!toggle)}
+            className={` transition-transform duration-600 
+    ${toggle ? "rotate-180" : "rotate-0"}
+  `}
+          >
+            <ChevronDown />
+          </button>
         </div>
 
-        <div className="flex gap-3">
-          <div className="flex flex-col">
+        <div className="flex ">
+          <div className="flex flex-col w-full">
             <label>Amount:</label>
             <input
               type="number"
@@ -92,15 +110,15 @@ function Parts({ id, data }) {
           </div>
 
           <div className="flex flex-col">
-            <label>Total Required:</label>
+            <label>Total:</label>
             <label className="nodrag border-2 rounded p-1 bg-gray-100">
               {state.totalRequired}
             </label>
           </div>
         </div>
 
-        <div className="flex gap-3">
-          <div className="flex flex-col">
+        <div className="flex ">
+          <div className="flex flex-col w-full">
             <label>Unit Cost:</label>
             <input
               type="number"
@@ -111,13 +129,19 @@ function Parts({ id, data }) {
           </div>
 
           <div className="flex flex-col">
-            <label>Total Cost:</label>
+            <label>Total:</label>
             <label className="nodrag border-2 rounded p-1 bg-gray-100">
               {state.totalCost}
             </label>
           </div>
         </div>
-
+        <div
+  className={`
+    transition-all duration-600 overflow-hidden
+    ${toggle ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"}
+  `}
+>
+<div className="flex flex-col">
         <label>PN:</label>
         <input
           type="text"
@@ -125,6 +149,8 @@ function Parts({ id, data }) {
           onChange={onChange("pn")}
           className="nodrag border-2 rounded p-1"
         />
+</div>
+<div className="flex flex-col">
 
         <label>SKU:</label>
         <input
@@ -133,9 +159,30 @@ function Parts({ id, data }) {
           onChange={onChange("sku")}
           className="nodrag border-2 rounded p-1"
         />
+</div>
+</div>
 
-        <Handle type="source" position={Position.Right} />
-        <Handle type="target" position={Position.Left} />
+
+        <Handle type="source" position={Position.Right} style={{
+          background: 'none',
+          border: 'none',
+          width: '1em',
+          height: '1em',
+          
+        }} >
+        <CircleChevronRight className="bg-gray-50  rounded-full hover:bg-gray-300 hover:scale-105"/>
+      </Handle>
+        <Handle type="target" position={Position.Left} style={{
+          background: 'none',
+          border: 'none',
+          width: '1em',
+          height: '1em',
+                    left:'-.5em'
+
+          
+        }} >
+        <CircleChevronRight className="bg-gray-50  rounded-full hover:bg-gray-300 hover:scale-105"/>
+      </Handle>
       </div>
     </div>
   );
