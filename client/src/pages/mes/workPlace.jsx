@@ -87,7 +87,6 @@ export default function WorkPlace() {
       <ReactFlow
         maxZoom={2}
         minZoom={0.1}
-
         nodes={nodes}
         nodeTypes={nodeTypes}
         edges={edges}

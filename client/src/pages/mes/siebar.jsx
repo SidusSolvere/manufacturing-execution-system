@@ -1,14 +1,13 @@
 import { useState, useRef } from "react";
 import { useReactFlow } from "@xyflow/react";
 import nodeTemplates from "../../nodes/initialNodes";
-
+import IdCount from "./idUpdate";
 function Sidebar() {
   const [open, setOpen] = useState(false);
   const toggle = () => setOpen(!open);
 
   const { setNodes, getEdges } = useReactFlow();
-
-  const idIncrement = useRef(1);
+  const idIncrement = useRef(IdCount);
 
   const addNode = (type, x = 100, y = 100) => {
     if (!nodeTemplates[type]) {

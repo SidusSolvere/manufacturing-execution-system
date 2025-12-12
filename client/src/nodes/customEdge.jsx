@@ -4,6 +4,7 @@ import {
   useReactFlow,
   getBezierPath
 } from '@xyflow/react';
+import { CircleX } from 'lucide-react';
 
 export default function CustomEdge({
   id,
@@ -34,12 +35,12 @@ export default function CustomEdge({
           }}
         >
           <button
-            className="nodrag nopan px-1.5 rounded-full border-2 border-gray-300 bg-gray-800/60 text-white"
+            className="nodrag nopan text-white bg-gray-400 rounded-full hover:scale-110 hover:bg-gray-500"
             onClick={() =>
               setEdges((es) => es.filter((e) => e.id !== id))
             }
           >
-            X
+            <CircleX/>
           </button>
         </div>
       </EdgeLabelRenderer>
