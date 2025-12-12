@@ -67,7 +67,7 @@ function Parts({ id, data }) {
   };
 
   return (
-    <div className=" bg-blue-500 rounded-3xl shadow-2xl ">
+    <div className=" bg-indigo-500 rounded-3xl shadow-2xl ">
       <div>
         <h1 className="p-4 text-xl font-semibold  text-white rounded-t-3xl">
           Parts
@@ -76,7 +76,7 @@ function Parts({ id, data }) {
       <div className="absolute right-4 top-4">
         <DeleteButton />
       </div>
-      <div className="p-4 bg-white rounded-2xl shadow-lg flex flex-col gap-3">
+      <div className="p-4 bg-gray-50 rounded-2xl shadow-lg flex flex-col gap-3">
 
         <div className="flex">
           <div className="flex flex-col w-full pr-2">
@@ -85,7 +85,7 @@ function Parts({ id, data }) {
               type="text"
               value={state.name}
               onChange={onChange("name")}
-              className="nodrag border-2 rounded p-1"
+              className="nodrag  border rounded p-1"
             />
           </div>
           <button
@@ -98,39 +98,39 @@ function Parts({ id, data }) {
           </button>
         </div>
 
-        <div className="flex ">
+        <div className="flex gap-3">
           <div className="flex flex-col w-full">
             <label>Amount:</label>
             <input
               type="number"
               value={state.amount}
               onChange={onChange("amount")}
-              className="nodrag border-2 rounded p-1"
+              className="nodrag  border rounded p-1"
             />
           </div>
 
           <div className="flex flex-col">
             <label>Total:</label>
-            <label className="nodrag border-2 rounded p-1 bg-gray-100">
+            <label className="nodrag  border rounded p-1 bg-gray-100">
               {state.totalRequired}
             </label>
           </div>
         </div>
 
-        <div className="flex ">
+        <div className="flex gap-3">
           <div className="flex flex-col w-full">
             <label>Unit Cost:</label>
             <input
               type="number"
               value={state.unitCost}
               onChange={onChange("unitCost")}
-              className="nodrag border-2 rounded p-1"
+              className="nodrag  border rounded p-1"
             />
           </div>
 
           <div className="flex flex-col">
             <label>Total:</label>
-            <label className="nodrag border-2 rounded p-1 bg-gray-100">
+            <label className="nodrag  border rounded p-1 bg-gray-100">
               {state.totalCost}
             </label>
           </div>
@@ -147,7 +147,7 @@ function Parts({ id, data }) {
           type="text"
           value={state.pn}
           onChange={onChange("pn")}
-          className="nodrag border-2 rounded p-1"
+          className="nodrag  border rounded p-1"
         />
 </div>
 <div className="flex flex-col">
@@ -157,7 +157,7 @@ function Parts({ id, data }) {
           type="text"
           value={state.sku}
           onChange={onChange("sku")}
-          className="nodrag border-2 rounded p-1"
+          className="nodrag  border rounded p-1"
         />
 </div>
 </div>

@@ -35,7 +35,7 @@ export default function FinalProduct({ id, data }) {
   }, [assemblyData]);
 
   return (
-<div className=" bg-blue-500 rounded-3xl shadow-2xl ">   
+<div className=" bg-lime-500 rounded-3xl shadow-2xl ">   
      <div>
           <h1 className="p-4 text-xl font-semibold  text-white rounded-t-3xl">
             Final Product
@@ -144,15 +144,7 @@ export default function FinalProduct({ id, data }) {
           />
         </div>
         </div>
-        <Handle type="source" position={Position.Right}style={{
-              background: "none",
-              border: "none",
-              width: "1em",
-              height: "1em",
-            }}
-          >
-            <CircleChevronRight className="bg-gray-50  rounded-full hover:bg-gray-300 hover:scale-105" />
-          </Handle>
+      
         <Handle type="target" position={Position.Left}  style={{
               background: "none",
               border: "none",

@@ -51,38 +51,38 @@ function Sidebar() {
         style={{ left: open ? "0" : "-200%" }}
       >
         <ul>
-          <li className="px-4 my-4 rounded-2xl font-medium hover:bg-gray-200">
-            <button onClick={() => addNode("productionOrder", 200, 100)}>
+          <li >
+            <button className=" text-left px-2  my-4 w-full rounded-2xl font-medium hover:bg-blue-200 " onClick={() => addNode("productionOrder", 200, 100)}>
               Production Order
             </button>
           </li>
 
           
 
-          <li className="px-4 my-4 rounded-2xl font-medium hover:bg-gray-200">
-            <button onClick={() => addNode("parts", 400, 200)}>Parts</button>
+          <li >
+            <button className=" text-left px-2 my-4 w-full rounded-2xl font-medium hover:bg-indigo-200" onClick={() => addNode("parts", 400, 200)}>Parts</button>
           </li>
-          <li className="px-4 my-4 rounded-2xl font-medium hover:bg-gray-200">
-            <button onClick={() => addNode("inventory", 300, 150)}>
+          <li >
+            <button className=" text-left px-2 my-4 w-full rounded-2xl font-medium hover:bg-slate-200" onClick={() => addNode("inventory", 300, 150)}>
               Inventory
             </button>
           </li>
 
-          <li className="px-4 my-4 rounded-2xl font-medium hover:bg-gray-200">
-            <button onClick={() => addNode("processing", 500, 250)}>
+          <li>
+            <button  className=" text-left px-2 my-4 w-full rounded-2xl font-medium hover:bg-emerald-200" onClick={() => addNode("processing", 500, 250)}>
               Processing
             </button>
           </li>
           
 
-          <li className="px-4 my-4 rounded-2xl font-medium hover:bg-gray-200">
-            <button onClick={() => addNode("assembly", 600, 300)}>
+          <li >
+            <button className=" text-left px-2 my-4 w-full rounded-2xl font-medium hover:bg-amber-200" onClick={() => addNode("assembly", 600, 300)}>
               Assembly
             </button>
           </li>
 
-          <li className="px-4 my-4 rounded-2xl font-medium hover:bg-gray-200">
-            <button onClick={() => addNode("finalProduct", 700, 350)}>
+          <li >
+            <button className=" text-left px-2 my-4 w-full rounded-2xl font-medium hover:bg-lime-200" onClick={() => addNode("finalProduct", 700, 350)}>
               Final Product
             </button>
           </li>

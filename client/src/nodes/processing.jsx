@@ -186,7 +186,7 @@ function Processing({ id, data }) {
 
   return (
     <>
-      <div className=" bg-blue-500 rounded-3xl shadow-2xl ">
+      <div className=" bg-emerald-500 rounded-3xl shadow-2xl ">
         <div>
           <h1 className="p-4 text-xl font-semibold  text-white rounded-t-3xl">
             Processing

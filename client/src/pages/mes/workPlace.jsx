@@ -85,6 +85,9 @@ export default function WorkPlace() {
   return (
     <div ref={fullscreenRef} className="h-full w-full relative">
       <ReactFlow
+        maxZoom={2}
+        minZoom={0.1}
+
         nodes={nodes}
         nodeTypes={nodeTypes}
         edges={edges}
@@ -93,7 +96,25 @@ export default function WorkPlace() {
         onConnect={onConnect}
         edgeTypes={edgeTypes}
       >
-        <MiniMap></MiniMap>
+        <MiniMap   nodeBorderRadius={50}
+  nodeColor={(node) => {
+  switch (node.type) {
+    case "productionOrder":
+      return "#3b82f6";
+    case "inventory":
+      return "#64748b";
+      case "parts":
+      return "#6366f1";
+      case "processing":
+      return "#10b981";
+      case "assembly":
+      return "#f59e0b";
+      case "finalProduct":
+        return "#84cc16"
+    default:
+      return "blue";
+  }
+}}></MiniMap>
         <Ribbon
           bgColorKey={bgColorKey}
           setBgColorKey={setBgColorKey}

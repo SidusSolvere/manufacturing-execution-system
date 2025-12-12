@@ -68,7 +68,7 @@ function Inventory({ id, data }) {
   }, [state, totalRequired]);
 
   return (
-    <div className=" bg-blue-500 rounded-3xl shadow-2xl ">
+    <div className=" bg-slate-500 rounded-3xl shadow-2xl ">
       <div>
               <h1 className="p-4 text-xl font-semibold  text-white rounded-t-3xl">Inventory</h1> 
       
@@ -76,7 +76,7 @@ function Inventory({ id, data }) {
              <div className="absolute right-4 top-4">
                 <DeleteButton/>
               </div>
-      <div className="p-4 bg-white rounded-2xl shadow-lg flex flex-col gap-3">
+      <div className="p-4 bg-gray-50 rounded-2xl shadow-lg flex flex-col gap-3">
         <div className="flex flex-col">
 <lable>Amount:</lable>
 <div className="flex">
