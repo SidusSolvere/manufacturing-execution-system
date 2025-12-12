@@ -5,15 +5,13 @@ import {
   useNodeConnections,
   useNodesData,
 } from "@xyflow/react";
-import { useEffect, useReducer,useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import DeleteButton from "./deleteNode";
 import { ChevronDown, CircleChevronRight } from "lucide-react";
 
-
 function Processing({ id, data }) {
   const { setNodes } = useReactFlow();
-  const [toggle,setToggle]=useState(false);
-  
+  const [toggle, setToggle] = useState(false);
 
   const initialState = {
     processName: data?.processName || "",
@@ -188,16 +186,16 @@ function Processing({ id, data }) {
 
   return (
     <>
-    <div className=" bg-blue-500 rounded-3xl shadow-2xl ">
-       < div>
-                <h1 className="p-4 text-xl font-semibold  text-white rounded-t-3xl">
-                  Processing
-                </h1>
-              </div>
-              <div className="absolute right-4 top-4">
-                <DeleteButton />
-              </div>
-              <div className="p-4 bg-white rounded-2xl shadow-lg flex flex-col gap-3">
+      <div className=" bg-blue-500 rounded-3xl shadow-2xl ">
+        <div>
+          <h1 className="p-4 text-xl font-semibold  text-white rounded-t-3xl">
+            Processing
+          </h1>
+        </div>
+        <div className="absolute right-4 top-4">
+          <DeleteButton />
+        </div>
+        <div className="p-4 bg-white rounded-2xl shadow-lg flex flex-col gap-3">
           <div className="flex flex-col">
             <label>Process Name:</label>
             <input
@@ -206,7 +204,6 @@ function Processing({ id, data }) {
               onChange={onChange("processName")}
               className="nodrag border-2 rounded p-1"
             />
-            
           </div>
 
           <div className="flex gap-3">
@@ -231,136 +228,143 @@ function Processing({ id, data }) {
             </div>
           </div>
           <div className="flex">
-            <div>
-                          <label>Status:<div className="rounded-full bg-gray-400 px-3 text-white">{state.status}</div></label>
-                          </div>
-                          <div><button
-  onClick={() => setToggle(!toggle)}
-  className={` transition-transform duration-600 
+            <div>Status:</div>
+            <div className="rounded-full bg-gray-400 px-3 text-white">
+              {state.status}
+            </div>
+            <div className="absolute right-4">
+              <button
+                onClick={() => setToggle(!toggle)}
+                className={` transition-transform duration-600 
     ${toggle ? "rotate-180" : "rotate-0"}
   `}
->
-  <ChevronDown />
-</button></div>
-</div>
-<div
-  className={`
+              >
+                <ChevronDown />
+              </button>
+            </div>
+          </div>
+          <div
+            className={`
     transition-all duration-600 overflow-hidden
     ${toggle ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"}
   `}
->
-          <div className="flex gap-3">
+          >
+            <div className="flex gap-3">
+              <div className="flex flex-col">
+                <label>Setup Time (min):</label>
+                <input
+                  type="Number"
+                  value={state.setupTimeMin}
+                  onChange={onChange("setupTimeMin")}
+                  className="nodrag border-2 rounded p-1"
+                />
+              </div>
+
+              <div className="flex flex-col">
+                <label>Operator Count:</label>
+                <input
+                  type="Number"
+                  value={state.operatorCount}
+                  onChange={onChange("operatorCount")}
+                  className="nodrag border-2 rounded p-1"
+                />
+              </div>
+            </div>
+
             <div className="flex flex-col">
-              <label>Setup Time (min):</label>
+              <label>Operator Skill:</label>
               <input
-                type="Number"
-                value={state.setupTimeMin}
-                onChange={onChange("setupTimeMin")}
+                type="text"
+                value={state.operatorSkill}
+                onChange={onChange("operatorSkill")}
                 className="nodrag border-2 rounded p-1"
               />
             </div>
 
-            <div className="flex flex-col">
-              <label>Operator Count:</label>
-              <input
-                type="Number"
-                value={state.operatorCount}
-                onChange={onChange("operatorCount")}
-                className="nodrag border-2 rounded p-1"
-              />
-            </div>
-          </div>
+            <div className="flex gap-3">
+              <div className="flex flex-col">
+                <label>Hours per Day:</label>
+                <input
+                  type="Number"
+                  value={state.hoursPerDay}
+                  onChange={onChange("hoursPerDay")}
+                  className="nodrag border-2 rounded p-1"
+                />
+              </div>
 
-          <div className="flex flex-col">
-            <label>Operator Skill:</label>
-            <input
-              type="text"
-              value={state.operatorSkill}
-              onChange={onChange("operatorSkill")}
-              className="nodrag border-2 rounded p-1"
-            />
-          </div>
-
-          <div className="flex gap-3">
-            <div className="flex flex-col">
-              <label>Hours per Day:</label>
-              <input
-                type="Number"
-                value={state.hoursPerDay}
-                onChange={onChange("hoursPerDay")}
-                className="nodrag border-2 rounded p-1"
-              />
+              <div className="flex flex-col">
+                <label>Days per Week:</label>
+                <input
+                  type="Number"
+                  value={state.daysPerWeek}
+                  onChange={onChange("daysPerWeek")}
+                  className="nodrag border-2 rounded p-1"
+                />
+              </div>
             </div>
 
-            <div className="flex flex-col">
-              <label>Days per Week:</label>
-              <input
-                type="Number"
-                value={state.daysPerWeek}
-                onChange={onChange("daysPerWeek")}
-                className="nodrag border-2 rounded p-1"
-              />
-            </div>
-          </div>
+            <div className="flex gap-3">
+              <div className="flex flex-col">
+                <label>Machine Cost (₹/hour):</label>
+                <input
+                  type="Number"
+                  value={state.machineCostPerHour}
+                  onChange={onChange("machineCostPerHour")}
+                  className="nodrag border-2 rounded p-1"
+                />
+              </div>
 
-          <div className="flex gap-3">
-            <div className="flex flex-col">
-              <label>Machine Cost (₹/hour):</label>
-              <input
-                type="Number"
-                value={state.machineCostPerHour}
-                onChange={onChange("machineCostPerHour")}
-                className="nodrag border-2 rounded p-1"
-              />
+              <div className="flex flex-col">
+                <label>Labor Cost (₹/hour):</label>
+                <input
+                  type="Number"
+                  value={state.laborCostPerHour}
+                  onChange={onChange("laborCostPerHour")}
+                  className="nodrag border-2 rounded p-1"
+                />
+              </div>
             </div>
 
             <div className="flex flex-col">
-              <label>Labor Cost (₹/hour):</label>
-              <input
-                type="Number"
-                value={state.laborCostPerHour}
-                onChange={onChange("laborCostPerHour")}
-                className="nodrag border-2 rounded p-1"
-              />
+              <label>Total Processing Cost:</label>
+              <label className="nodrag border-2 rounded p-1 bg-gray-100">
+                {state.totalProcessingCost}
+              </label>
+            </div>
+
+            <div className="flex flex-col">
+              <label>Total Time (hours):</label>
+              <label className="nodrag border-2 rounded p-1 bg-gray-100">
+                {state.time}
+              </label>
             </div>
           </div>
 
-          <div className="flex flex-col">
-            <label>Total Processing Cost:</label>
-            <label className="nodrag border-2 rounded p-1 bg-gray-100">
-              {state.totalProcessingCost}
-            </label>
-          </div>
-          
-
-          <div className="flex flex-col">
-            <label>Total Time (hours):</label>
-            <label className="nodrag border-2 rounded p-1 bg-gray-100">
-              {state.time}
-            </label>
-          </div>
-          </div>
-
-          <Handle type="source" position={Position.Right} style={{
-          background: 'none',
-          border: 'none',
-          width: '1em',
-          height: '1em',
-          
-        }} >
-        <CircleChevronRight className="bg-gray-50  rounded-full hover:bg-gray-300 hover:scale-105"/>
-      </Handle>
-          <Handle type="target" position={Position.Left} style={{
-          background: 'none',
-          border: 'none',
-          width: '1em',
-          height: '1em',
-                              left:'-.5em'
-
-          
-        }} >
-        <CircleChevronRight className="bg-gray-50  rounded-full hover:bg-gray-300 hover:scale-105"/>
-      </Handle>
+          <Handle
+            type="source"
+            position={Position.Right}
+            style={{
+              background: "none",
+              border: "none",
+              width: "1em",
+              height: "1em",
+            }}
+          >
+            <CircleChevronRight className="bg-gray-50  rounded-full hover:bg-gray-300 hover:scale-105" />
+          </Handle>
+          <Handle
+            type="target"
+            position={Position.Left}
+            style={{
+              background: "none",
+              border: "none",
+              width: "1em",
+              height: "1em",
+              left: "-.5em",
+            }}
+          >
+            <CircleChevronRight className="bg-gray-50  rounded-full hover:bg-gray-300 hover:scale-105" />
+          </Handle>
         </div>
       </div>
     </>

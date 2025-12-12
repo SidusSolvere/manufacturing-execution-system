@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect , useState} from "react";
 import {
   Position,
   Handle,
@@ -6,9 +6,13 @@ import {
   useNodesData,
   useReactFlow,
 } from "@xyflow/react";
+import DeleteButton from "./deleteNode";
+import { ChevronDown, CircleChevronRight } from "lucide-react";
 
 export default function FinalProduct({ id, data }) {
   const connections = useNodeConnections(id);
+    const [toggle, setToggle] = useState(false);
+  
 
   const sourceId = connections.find((c) => c.target === id)?.source;
 
@@ -31,9 +35,17 @@ export default function FinalProduct({ id, data }) {
   }, [assemblyData]);
 
   return (
-    <div className="p-4 bg-white border rounded shadow w-[320px]">
-      <h2 className="text-lg font-semibold mb-3">Final Product</h2>
+<div className=" bg-blue-500 rounded-3xl shadow-2xl ">   
+     <div>
+          <h1 className="p-4 text-xl font-semibold  text-white rounded-t-3xl">
+            Final Product
+          </h1>
+        </div>
+        <div className="absolute right-4 top-4">
+          <DeleteButton />
+        </div>
 
+        <div className="p-4 bg-white rounded-2xl shadow-lg flex flex-col gap-3">
       <div className="flex flex-col gap-2">
         <div>
           <label className="text-sm font-medium">Item Name</label>
@@ -47,7 +59,8 @@ export default function FinalProduct({ id, data }) {
           />
         </div>
 
-        <div>
+        <div className="flex">
+          <div className="flex flex-col w-full mr-2">
           <label className="text-sm font-medium">Quantity Produced</label>
           <input
             type="number"
@@ -55,8 +68,22 @@ export default function FinalProduct({ id, data }) {
             disabled
             className="w-full border p-1 rounded bg-gray-100"
           />
+          </div>
+           <button
+                onClick={() => setToggle(!toggle)}
+                className={` transition-transform duration-600 
+    ${toggle ? "rotate-180" : "rotate-0"}
+  `}
+              >
+                <ChevronDown />
+              </button>
         </div>
-
+<div
+            className={`
+    transition-all duration-600 overflow-hidden
+    ${toggle ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"}
+  `}
+          >
         <div>
           <label className="text-sm font-medium">Batch Number</label>
           <input
@@ -116,9 +143,28 @@ export default function FinalProduct({ id, data }) {
             className="w-full border p-1 rounded"
           />
         </div>
-        <Handle type="source" position={Position.Right} />
-        <Handle type="target" position={Position.Left} />
+        </div>
+        <Handle type="source" position={Position.Right}style={{
+              background: "none",
+              border: "none",
+              width: "1em",
+              height: "1em",
+            }}
+          >
+            <CircleChevronRight className="bg-gray-50  rounded-full hover:bg-gray-300 hover:scale-105" />
+          </Handle>
+        <Handle type="target" position={Position.Left}  style={{
+              background: "none",
+              border: "none",
+              width: "1em",
+              height: "1em",
+              left: "-.5em",
+            }}
+          >
+            <CircleChevronRight className="bg-gray-50  rounded-full hover:bg-gray-300 hover:scale-105" />
+          </Handle>
       </div>
+    </div>
     </div>
   );
 }

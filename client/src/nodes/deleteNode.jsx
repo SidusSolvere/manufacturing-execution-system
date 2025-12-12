@@ -14,7 +14,7 @@ export default function DeleteButton() {
   return (
     <button
       onClick={handleDelete}
-      className="bg-black/20 backdrop-blur-xs text-white font-semibold rounded-full  hover:bg-black/50 "
+      className="bg-black/20 backdrop-blur-xs text-white font-semibold rounded-full  hover:bg-black/50  hover:scale-105 "
     >
          <CircleX />
 
