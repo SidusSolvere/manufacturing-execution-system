@@ -9,11 +9,11 @@ import {
 import DeleteButton from "./deleteNode";
 import { useNearestUpstream } from "./nearestNodeUpstream";
 import { ChevronDown, CircleChevronRight } from "lucide-react";
+import DuplicateNode from "./duplicateNode";
 
 function Assembly({ id, data }) {
   const { setNodes } = useReactFlow();
-    const [toggle, setToggle] = useState(false);
-
+  const [toggle, setToggle] = useState(false);
 
   const connections = useNodeConnections(id);
   const sourceIds = connections
@@ -105,27 +105,25 @@ function Assembly({ id, data }) {
   ]);
 
   return (
-      <div className=" bg-amber-500 rounded-3xl shadow-2xl ">
-      <div>
-                <h1 className="p-4 text-xl font-semibold  text-white rounded-t-3xl">
-                  Assembly
-                </h1>
-              </div>
-              <div className="absolute right-4 top-4">
-                <DeleteButton />
-              </div>
-              <div className="p-4 bg-white rounded-2xl shadow-lg ">
-<div className="flex gap-3 ">
-                            <div className="flex flex-col w-[60%]">
-
-          <label>Name:</label>
-          <input
-            type="text"
-            value={state.name}
-            onChange={onChange("name")}
-            className="nodrag border-2 rounded p-1 w-full"
-          />
-</div>
+    <div className=" bg-amber-500 rounded-3xl shadow-2xl ">
+      <div className="flex">
+        <h1 className="p-4 text-xl font-semibold text-white ">Assembly</h1>
+        <DuplicateNode NodeId={id} />
+      </div>
+      <div className="absolute right-4 top-4">
+        <DeleteButton />
+      </div>
+      <div className="p-4 bg-white rounded-2xl shadow-lg ">
+        <div className="flex gap-3 ">
+          <div className="flex flex-col w-[60%]">
+            <label>Name:</label>
+            <input
+              type="text"
+              value={state.name}
+              onChange={onChange("name")}
+              className="nodrag border-2 rounded p-1 w-full"
+            />
+          </div>
           <div className="flex flex-col w-[30%]">
             <label>Rate (units/hour):</label>
             <input
@@ -135,69 +133,68 @@ function Assembly({ id, data }) {
               className="nodrag border-2 rounded p-1 "
             />
           </div>
-           <button
-                onClick={() => setToggle(!toggle)}
-                className={` transition-transform duration-600 
+          <button
+            onClick={() => setToggle(!toggle)}
+            className={` transition-transform duration-600 
     ${toggle ? "rotate-180" : "rotate-0"}
   `}
-              >
-                <ChevronDown />
-              </button>
-                  </div>
-<div
-            className={`
+          >
+            <ChevronDown />
+          </button>
+        </div>
+        <div
+          className={`
     transition-all duration-600 overflow-hidden
     ${toggle ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"}
   `}
-          >
-                          <div className="flex gap-3">
+        >
+          <div className="flex gap-3">
+            <div className="flex flex-col w-full">
+              <label>Hours per Day:</label>
+              <input
+                type="number"
+                value={state.hoursPerDay}
+                onChange={onChange("hoursPerDay")}
+                className="nodrag border-2 rounded p-1"
+              />
+            </div>
 
-          <div className="flex flex-col w-full">
-            <label>Hours per Day:</label>
-            <input
-              type="number"
-              value={state.hoursPerDay}
-              onChange={onChange("hoursPerDay")}
-              className="nodrag border-2 rounded p-1"
-            />
+            <div className="flex flex-col">
+              <label>Days per Week:</label>
+              <input
+                type="number"
+                value={state.daysPerWeek}
+                onChange={onChange("daysPerWeek")}
+                className="nodrag border-2 rounded p-1"
+              />
+            </div>
           </div>
 
-        <div className="flex flex-col">
-          <label>Days per Week:</label>
-          <input
-            type="number"
-            value={state.daysPerWeek}
-            onChange={onChange("daysPerWeek")}
-            className="nodrag border-2 rounded p-1"
-          />
-        </div>
-        </div>
+          <div className="flex gap-3">
+            <div className="flex flex-col">
+              <label>Machine Cost/hour:</label>
+              <input
+                type="number"
+                value={state.machineCostPerHour}
+                onChange={onChange("machineCostPerHour")}
+                className="nodrag border-2 rounded p-1"
+              />
+            </div>
 
-        <div className="flex gap-3">
+            <div className="flex flex-col">
+              <label>Labor Cost/hour:</label>
+              <input
+                type="number"
+                value={state.laborCostPerHour}
+                onChange={onChange("laborCostPerHour")}
+                className="nodrag border-2 rounded p-1"
+              />
+            </div>
+          </div>
+
           <div className="flex flex-col">
-            <label>Machine Cost/hour:</label>
-            <input
-              type="number"
-              value={state.machineCostPerHour}
-              onChange={onChange("machineCostPerHour")}
-              className="nodrag border-2 rounded p-1"
-            />
+            <label>Assembly Cost: {state.assemblyCost}</label>
           </div>
-
-          <div className="flex flex-col">
-            <label>Labor Cost/hour:</label>
-            <input
-              type="number"
-              value={state.laborCostPerHour}
-              onChange={onChange("laborCostPerHour")}
-              className="nodrag border-2 rounded p-1"
-            />
-          </div>
-        </div>
-
-        <div className="flex flex-col">
-          <label>Assembly Cost: {state.assemblyCost}</label>
-        </div>
         </div>
 
         <div className="flex flex-col mt-4">
@@ -217,28 +214,33 @@ function Assembly({ id, data }) {
           </ul>
         </div>
 
-        <Handle type="source" position={Position.Right} style={{
-              background: "none",
-              border: "none",
-              width: "1em",
-              height: "1em",
-            }}
-          >
-            <CircleChevronRight className="bg-gray-50  rounded-full hover:bg-gray-300 hover:scale-105" />
-          </Handle>
-        <Handle type="target" position={Position.Left}  style={{
-              background: "none",
-              border: "none",
-              width: "1em",
-              height: "1em",
-              left: "-.5em",
-            }}
-          >
-            <CircleChevronRight className="bg-gray-50  rounded-full hover:bg-gray-300 hover:scale-105" />
-          </Handle>
+        <Handle
+          type="source"
+          position={Position.Right}
+          style={{
+            background: "none",
+            border: "none",
+            width: "1em",
+            height: "1em",
+          }}
+        >
+          <CircleChevronRight className="bg-gray-50  rounded-full hover:bg-gray-300 hover:scale-105" />
+        </Handle>
+        <Handle
+          type="target"
+          position={Position.Left}
+          style={{
+            background: "none",
+            border: "none",
+            width: "1em",
+            height: "1em",
+            left: "-.5em",
+          }}
+        >
+          <CircleChevronRight className="bg-gray-50  rounded-full hover:bg-gray-300 hover:scale-105" />
+        </Handle>
       </div>
     </div>
-    
   );
 }
 

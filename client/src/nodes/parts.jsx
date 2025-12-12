@@ -8,6 +8,7 @@ import {
 import { useEffect, useReducer, useState } from "react";
 import DeleteButton from "./deleteNode";
 import { ChevronDown, CircleChevronRight } from "lucide-react";
+import DuplicateNode from "./duplicateNode";
 
 function Parts({ id, data }) {
   const { setNodes } = useReactFlow();
@@ -68,16 +69,14 @@ function Parts({ id, data }) {
 
   return (
     <div className=" bg-indigo-500 rounded-3xl shadow-2xl ">
-      <div>
-        <h1 className="p-4 text-xl font-semibold  text-white rounded-t-3xl">
-          Parts
-        </h1>
+      <div className="flex">
+        <h1 className="p-4 text-xl font-semibold text-white ">Parts</h1>
+        <DuplicateNode NodeId={id} />
       </div>
       <div className="absolute right-4 top-4">
         <DeleteButton />
       </div>
       <div className="p-4 bg-gray-50 rounded-2xl shadow-lg flex flex-col gap-3">
-
         <div className="flex">
           <div className="flex flex-col w-full pr-2">
             <label>Name:</label>
@@ -136,53 +135,56 @@ function Parts({ id, data }) {
           </div>
         </div>
         <div
-  className={`
+          className={`
     transition-all duration-600 overflow-hidden
     ${toggle ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"}
   `}
->
-<div className="flex flex-col">
-        <label>PN:</label>
-        <input
-          type="text"
-          value={state.pn}
-          onChange={onChange("pn")}
-          className="nodrag  border rounded p-1"
-        />
-</div>
-<div className="flex flex-col">
+        >
+          <div className="flex flex-col">
+            <label>PN:</label>
+            <input
+              type="text"
+              value={state.pn}
+              onChange={onChange("pn")}
+              className="nodrag  border rounded p-1"
+            />
+          </div>
+          <div className="flex flex-col">
+            <label>SKU:</label>
+            <input
+              type="text"
+              value={state.sku}
+              onChange={onChange("sku")}
+              className="nodrag  border rounded p-1"
+            />
+          </div>
+        </div>
 
-        <label>SKU:</label>
-        <input
-          type="text"
-          value={state.sku}
-          onChange={onChange("sku")}
-          className="nodrag  border rounded p-1"
-        />
-</div>
-</div>
-
-
-        <Handle type="source" position={Position.Right} style={{
-          background: 'none',
-          border: 'none',
-          width: '1em',
-          height: '1em',
-          
-        }} >
-        <CircleChevronRight className="bg-gray-50  rounded-full hover:bg-gray-300 hover:scale-105"/>
-      </Handle>
-        <Handle type="target" position={Position.Left} style={{
-          background: 'none',
-          border: 'none',
-          width: '1em',
-          height: '1em',
-                    left:'-.5em'
-
-          
-        }} >
-        <CircleChevronRight className="bg-gray-50  rounded-full hover:bg-gray-300 hover:scale-105"/>
-      </Handle>
+        <Handle
+          type="source"
+          position={Position.Right}
+          style={{
+            background: "none",
+            border: "none",
+            width: "1em",
+            height: "1em",
+          }}
+        >
+          <CircleChevronRight className="bg-gray-50  rounded-full hover:bg-gray-300 hover:scale-105" />
+        </Handle>
+        <Handle
+          type="target"
+          position={Position.Left}
+          style={{
+            background: "none",
+            border: "none",
+            width: "1em",
+            height: "1em",
+            left: "-.5em",
+          }}
+        >
+          <CircleChevronRight className="bg-gray-50  rounded-full hover:bg-gray-300 hover:scale-105" />
+        </Handle>
       </div>
     </div>
   );

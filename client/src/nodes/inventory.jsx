@@ -8,7 +8,7 @@ import {
 import { useCallback, useReducer, useEffect } from "react";
 import DeleteButton from "./deleteNode";
 import { CircleChevronRight } from "lucide-react";
-
+import DuplicateNode from "./duplicateNode";
 
 const UNITS = {
   box: { label: "Box", amount: 100 },
@@ -69,70 +69,83 @@ function Inventory({ id, data }) {
 
   return (
     <div className=" bg-slate-500 rounded-3xl shadow-2xl ">
-      <div>
-              <h1 className="p-4 text-xl font-semibold  text-white rounded-t-3xl">Inventory</h1> 
-      
-            </div>
-             <div className="absolute right-4 top-4">
-                <DeleteButton/>
-              </div>
+      <div className="flex">
+        <h1 className="p-4 text-xl font-semibold text-white ">Inventory</h1>
+        <DuplicateNode NodeId={id} />
+      </div>
+      <div className="absolute right-4 top-4">
+        <DeleteButton />
+      </div>
       <div className="p-4 bg-gray-50 rounded-2xl shadow-lg flex flex-col gap-3">
         <div className="flex flex-col">
-<label>Amount:</label>
-<div className="flex">
-        <input
-          type="number"
-          value={state.currentStock}
-          onChange={(e) => dispatch({ currentStock: Number(e.target.value) })}
-          className="nodrag border-2 rounded-[5px] w-30"
-        />
+          <label>Amount:</label>
+          <div className="flex">
+            <input
+              type="number"
+              value={state.currentStock}
+              onChange={(e) =>
+                dispatch({ currentStock: Number(e.target.value) })
+              }
+              className="nodrag border-2 rounded-[5px] w-30"
+            />
 
-        <select
-          value={state.unit}
-          onChange={(e) => dispatch({ unit: e.target.value })}
-          className="nodrag border-2 rounded-[5px] font-bold"
-        >
-          {Object.entries(UNITS).map(([key, obj]) => (
-            <option key={key} value={key}>
-              {obj.label}
-            </option>
-          ))}
-        </select>
+            <select
+              value={state.unit}
+              onChange={(e) => dispatch({ unit: e.target.value })}
+              className="nodrag border-2 rounded-[5px] font-bold"
+            >
+              {Object.entries(UNITS).map(([key, obj]) => (
+                <option key={key} value={key}>
+                  {obj.label}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
-        </div>
-<div className="flex">
-  <div className="flex flex-col p-1">
-        <label>Reserve %</label>
-        <input
-          type="number"
-          value={state.reservedStock}
-          onChange={(e) => dispatch({ reservedStock: Number(e.target.value) })}
-          className="nodrag border-2 rounded-[5px] w-[70px]"
-        /></div>
-<div className="flex flex-col p-1">
-        <label>Status: </label>
-        <label className="rounded-full bg-gray-400 px-3 text-white">{status}</label>
+        <div className="flex">
+          <div className="flex flex-col p-1">
+            <label>Reserve %</label>
+            <input
+              type="number"
+              value={state.reservedStock}
+              onChange={(e) =>
+                dispatch({ reservedStock: Number(e.target.value) })
+              }
+              className="nodrag border-2 rounded-[5px] w-[70px]"
+            />
+          </div>
+          <div className="flex flex-col p-1">
+            <label>Status: </label>
+            <label className="rounded-full bg-gray-400 px-3 text-white">
+              {status}
+            </label>
+          </div>
         </div>
       </div>
-</div>
-      <Handle type="source" position={Position.Right}style={{
-          background: 'none',
-          border: 'none',
-          width: '1em',
-          height: '1em',
-          
-        }} >
-        <CircleChevronRight className="bg-gray-50  rounded-full hover:bg-gray-300 hover:scale-105"/>
+      <Handle
+        type="source"
+        position={Position.Right}
+        style={{
+          background: "none",
+          border: "none",
+          width: "1em",
+          height: "1em",
+        }}
+      >
+        <CircleChevronRight className="bg-gray-50  rounded-full hover:bg-gray-300 hover:scale-105" />
       </Handle>
-      <Handle type="target" position={Position.Left} style={{
-          background: 'none',
-          border: 'none',
-          width: '1em',
-          height: '1em',
-          left:'-.5em'
-          
-        }} >
-        <CircleChevronRight className="bg-gray-50  rounded-full hover:bg-gray-300 hover:scale-105"/>
+      <Handle
+        type="target"
+        position={Position.Left}
+        style={{
+          background: "none",
+          border: "none",
+          width: "1em",
+          height: "1em",
+          left: "-.5em",
+        }}
+      >
+        <CircleChevronRight className="bg-gray-50  rounded-full hover:bg-gray-300 hover:scale-105" />
       </Handle>
     </div>
   );

@@ -4,12 +4,15 @@ import {
   useReactFlow,
   useNodeConnections,
   useNodesData,
+  useNodeId,
 } from "@xyflow/react";
 import { useEffect, useReducer, useState } from "react";
 import DeleteButton from "./deleteNode";
 import { ChevronDown, CircleChevronRight } from "lucide-react";
+import DuplicateNode from "./duplicateNode";
 
 function Processing({ id, data }) {
+  const currentID=useNodeId();
   const { setNodes } = useReactFlow();
   const [toggle, setToggle] = useState(false);
 
@@ -187,10 +190,12 @@ function Processing({ id, data }) {
   return (
     <>
       <div className=" bg-emerald-500 rounded-3xl shadow-2xl ">
-        <div>
-          <h1 className="p-4 text-xl font-semibold  text-white rounded-t-3xl">
+        <div className="flex">
+          <h1 className="p-4 text-xl font-semibold text-white ">
             Processing
           </h1>
+                  <DuplicateNode NodeId={id}/>
+
         </div>
         <div className="absolute right-4 top-4">
           <DeleteButton />
