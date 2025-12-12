@@ -11,6 +11,7 @@ import { color } from "./backgroundTheme/color";
 import { variant } from "./backgroundTheme/variant";
 
 import Ribbon from "./ribbon";
+import { Maximize2, Minimize2 } from "lucide-react";
 
 import {
   ReactFlow,
@@ -33,7 +34,7 @@ const nodeTypes = {
   parts: Parts,
   processing: Processing,
   assembly: Assembly,
-  finalProduct:FinalProduct,
+  finalProduct: FinalProduct,
 };
 
 const edgeTypes = { "custom-edge": CustomEdge };
@@ -83,24 +84,6 @@ export default function WorkPlace() {
 
   return (
     <div ref={fullscreenRef} className="h-full w-full relative">
-      {!isFull && (
-        <button
-          onClick={handleFullscreen}
-          className="absolute top-[10%] right-4 z-50 bg-gray-800 text-white px-3 py-1 rounded"
-        >
-          ⛶
-        </button>
-      )}
-
-      {isFull && (
-        <button
-          onClick={handleExitFullscreen}
-          className="absolute top-4 right-4 z-50 bg-red-600 text-white px-3 py-1 rounded"
-        >
-          ✕
-        </button>
-      )}
-
       <ReactFlow
         nodes={nodes}
         nodeTypes={nodeTypes}
@@ -110,7 +93,7 @@ export default function WorkPlace() {
         onConnect={onConnect}
         edgeTypes={edgeTypes}
       >
-        <MiniMap  ></MiniMap>
+        <MiniMap></MiniMap>
         <Ribbon
           bgColorKey={bgColorKey}
           setBgColorKey={setBgColorKey}
@@ -126,7 +109,21 @@ export default function WorkPlace() {
           variant={variant[variantKey]}
         />
 
-        <Controls />
+        <Controls className="scale-90">
+          {!isFull && (
+            <button onClick={handleFullscreen} className="react-flow__controls-button">
+              <Maximize2  />
+            </button>
+          )}
+          {isFull && (
+            <button onClick={handleExitFullscreen} className="react-flow__controls-button">
+              <Minimize2 />
+            </button>
+          )}
+          
+
+
+        </Controls>
       </ReactFlow>
     </div>
   );

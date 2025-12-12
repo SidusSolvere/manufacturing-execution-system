@@ -1,7 +1,51 @@
 @import "tailwindcss";
 
 
-html, body, #root { 
+html,
+body,
+#root {
   height: 100%;
   width: 100%;
+}
+
+.react-flow {
+  --xy-controls-button-background-color-default: #f9fafb;
+  --xy-controls-button-background-color-hover-default: #6b7280;
+
+  --xy-controls-button-color-default: #1e293b;
+  --xy-controls-button-color-hover-default: #ffffff;
+
+  --xy-controls-button-border-color-default: #d1d5db;
+}
+
+.react-flow__controls {
+  background: #f9fafb !important;
+  border: 1px solid #6b7280;
+  border-radius: 5px;
+  box-shadow: none !important;
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: 0.15s ease;
+}
+
+.react-flow__controls:hover {
+  background: #6b7280;
+}
+
+.react-flow__controls-button {
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  border-bottom: none;
+  transition: all 0.15s ease;
+  background: #f9fafb;
+}
+
+.react-flow__controls-button:hover {
+  transform: scale(1.05);
+  background: #6b7280 !important;
+  color: white;
+  border-color: #6b7280;
 }
