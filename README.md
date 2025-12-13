@@ -16,7 +16,7 @@ Styling + utility-first UI development
 
 
 Global state for nodes, user roles, permissions
-  https://redux-toolkit.js.org
+ zustand
 
 
 React Flow
