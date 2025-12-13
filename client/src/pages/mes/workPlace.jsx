@@ -12,6 +12,8 @@ import { variant } from "./backgroundTheme/variant";
 
 import Ribbon from "./ribbon";
 import { Maximize2, Minimize2 } from "lucide-react";
+import AutoLayoutButton from "../../nodes/autoLayout";
+
 
 import {
   ReactFlow,
@@ -85,6 +87,8 @@ export default function WorkPlace() {
   return (
     <div ref={fullscreenRef} className="h-full w-full relative">
       <ReactFlow
+        onlyRenderVisibleElements={true}
+
         maxZoom={2}
         minZoom={0.1}
         nodes={nodes}
@@ -140,6 +144,7 @@ export default function WorkPlace() {
               <Minimize2 />
             </button>
           )}
+         <AutoLayoutButton/>
           
 
 

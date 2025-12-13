@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React,{ useEffect, useState } from "react";
 import {
   Position,
   Handle,
@@ -10,7 +10,7 @@ import DeleteButton from "./deleteNode";
 import { ChevronDown, CircleChevronRight } from "lucide-react";
 import DuplicateNode from "./duplicateNode";
 
-export default function FinalProduct({ id, data }) {
+function FinalProduct({ id, data }) {
   const connections = useNodeConnections(id);
   const [toggle, setToggle] = useState(false);
 
@@ -165,3 +165,4 @@ export default function FinalProduct({ id, data }) {
     </div>
   );
 }
+export default React.memo(FinalProduct);

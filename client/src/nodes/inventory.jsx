@@ -5,7 +5,7 @@ import {
   useNodeConnections,
   useNodesData,
 } from "@xyflow/react";
-import { useCallback, useReducer, useEffect } from "react";
+import React,{ useCallback, useReducer, useEffect } from "react";
 import DeleteButton from "./deleteNode";
 import { CircleChevronRight } from "lucide-react";
 import DuplicateNode from "./duplicateNode";
@@ -18,13 +18,6 @@ const UNITS = {
   drum: { label: "Drum", amount: 200 },
 };
 
-const initialState = (data) => ({
-  currentStock: data?.currentStock || 0,
-  reservedStock: data?.reservedStock || 0,
-  unit: data?.unit || "box",
-  status: data?.status || "",
-  total: data?.total || 0,
-});
 
 function reducer(state, action) {
   return { ...state, ...action };
@@ -38,7 +31,14 @@ function Inventory({ id, data }) {
 
   const totalRequired = Number(sourceNode?.data?.totalRequired || 0);
 
-  const [state, dispatch] = useReducer(reducer, data, initialState);
+  const [state, dispatch] = useReducer(reducer, null, ()=>({
+    currentStock: data?.currentStock || 0,
+  reservedStock: data?.reservedStock || 0,
+  unit: data?.unit || "box",
+  status: data?.status || "",
+  total: data?.total || 0,
+
+  }));
 
   const multiplier = UNITS[state.unit].amount;
   const finalStock = state.currentStock * multiplier;
@@ -151,4 +151,4 @@ function Inventory({ id, data }) {
   );
 }
 
-export default Inventory;
+export default React.memo(Inventory);

@@ -83,5 +83,11 @@ export const initialEdges =
         "target": "14",
         "type": "custom-edge",
         "id": "xy-edge__13-14"
-    }
+    },
+    {
+    "source": "14",
+    "target": "15",
+    "type": "custom-edge",
+    "id": "xy-edge__14-15"
+}
 ];

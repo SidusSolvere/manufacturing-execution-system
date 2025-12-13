@@ -5,7 +5,7 @@ import {
   useNodeConnections,
   useNodesData,
 } from "@xyflow/react";
-import { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import DeleteButton from "./deleteNode";
 import { ChevronDown, CircleChevronRight } from "lucide-react";
 import DuplicateNode from "./duplicateNode";
@@ -22,21 +22,25 @@ function Parts({ id, data }) {
 
   const poAmount = Number(sourceData?.data?.quantity || 0);
 
-  const initial = {
-    pn: data?.pn || "",
+  
+
+  function reducer(state, action) {
+    return { ...state, ...action };
+  }
+
+  const [state, dispatch] = useReducer(
+    reducer,
+    null,
+    ()=>({
+      pn: data?.pn || "",
     amount: data?.amount || 0,
     totalRequired: data?.totalRequired || 0,
     sku: data?.sku || "",
     unitCost: data?.unitCost || 0,
     totalCost: data?.totalCost || 0,
     name: data?.name || "",
-  };
-
-  function reducer(state, action) {
-    return { ...state, ...action };
-  }
-
-  const [state, dispatch] = useReducer(reducer, initial);
+  })
+);
 
   const updateNodeData = (patch) => {
     setNodes((ns) =>
@@ -190,4 +194,4 @@ function Parts({ id, data }) {
   );
 }
 
-export default Parts;
+export default React.memo(Parts);

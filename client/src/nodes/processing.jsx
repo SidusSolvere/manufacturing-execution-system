@@ -6,17 +6,25 @@ import {
   useNodesData,
   useNodeId,
 } from "@xyflow/react";
-import { useEffect, useReducer, useState } from "react";
+import React,{ useEffect, useReducer, useState } from "react";
 import DeleteButton from "./deleteNode";
 import { ChevronDown, CircleChevronRight } from "lucide-react";
 import DuplicateNode from "./duplicateNode";
+
 
 function Processing({ id, data }) {
   const currentID=useNodeId();
   const { setNodes } = useReactFlow();
   const [toggle, setToggle] = useState(false);
 
-  const initialState = {
+  function reducer(state, action) {
+    return { ...state, ...action };
+  }
+
+const [state, dispatch] = useReducer(
+  reducer,
+  null,
+  () => ({
     processName: data?.processName || "",
     machineId: data?.machineId || "",
     rateUnitsPerHour: data?.rateUnitsPerHour || 0,
@@ -33,13 +41,8 @@ function Processing({ id, data }) {
     time: data?.time || "",
     total: data?.total || 0,
     totalTimeHours: data?.totalTimeHours || 0,
-  };
-  function reducer(state, action) {
-    return { ...state, ...action };
-  }
-
-  const [state, dispatch] = useReducer(reducer, initialState);
-
+  })
+);
   const updateNodeData = (patch) => {
     setNodes((ns) =>
       ns.map((n) => (n.id === id ? { ...n, data: { ...n.data, ...patch } } : n))
@@ -375,4 +378,4 @@ function Processing({ id, data }) {
     </>
   );
 }
-export default Processing;
+export default React.memo(Processing);

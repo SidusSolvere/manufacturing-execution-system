@@ -1,4 +1,4 @@
-import { useReducer, useEffect, useState } from "react";
+import React,{ useReducer, useEffect, useState } from "react";
 import {
   Position,
   Handle,
@@ -10,6 +10,7 @@ import DeleteButton from "./deleteNode";
 import { useNearestUpstream } from "./nearestNodeUpstream";
 import { ChevronDown, CircleChevronRight } from "lucide-react";
 import DuplicateNode from "./duplicateNode";
+
 
 function Assembly({ id, data }) {
   const { setNodes } = useReactFlow();
@@ -25,8 +26,13 @@ function Assembly({ id, data }) {
     .filter((p) => p && p.data)
     .map((p) => p.data.amount);
 
-  const initialState = {
-    name: data?.name || "",
+  
+
+  function reducer(state, action) {
+    return { ...state, ...action };
+  }
+
+  const [state, dispatch] = useReducer(reducer,null,()=>({name: data?.name || "",
     unitsPerHr: data?.unitsPerHr || 0,
     hoursPerDay: data?.hoursPerDay || 8,
     daysPerWeek: data?.daysPerWeek || 5,
@@ -34,14 +40,7 @@ function Assembly({ id, data }) {
     qualityPass: data?.qualityPass || "",
     machineCostPerHour: data?.machineCostPerHour || 0,
     laborCostPerHour: data?.laborCostPerHour || 0,
-    assemblyCost: data?.assemblyCost || 0,
-  };
-
-  function reducer(state, action) {
-    return { ...state, ...action };
-  }
-
-  const [state, dispatch] = useReducer(reducer, initialState);
+    assemblyCost: data?.assemblyCost || 0,}));
 
   const updateNodeData = (patch) => {
     setNodes((ns) =>
@@ -244,4 +243,4 @@ function Assembly({ id, data }) {
   );
 }
 
-export default Assembly;
+export default React.memo(Assembly);

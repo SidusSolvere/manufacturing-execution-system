@@ -3,10 +3,16 @@ import { useReducer, useCallback, useState } from "react";
 import DeleteButton from "./deleteNode";
 import { ChevronDown, CircleChevronRight } from "lucide-react";
 import DuplicateNode from "./duplicateNode";
+import React from "react";
+
 
 function ProductionOrder({ id, data }) {
   const { setNodes } = useReactFlow();
   const [toggle, setToggle] = useState(false);
+  const toggleDetails = useCallback(() => {
+  setToggle((t) => !t);
+}, []);
+
 
   function reducer(state, action) {
     switch (action.type) {
@@ -17,16 +23,19 @@ function ProductionOrder({ id, data }) {
     }
   }
 
-  const initialState = {
+
+const [state, dispatch] = useReducer(
+  reducer,
+  null,
+  () => ({
     itemName: data?.itemName || "",
     quantity: data?.quantity || 1,
     startDate: data?.startDate || "",
     endDate: data?.endDate || "",
     customerName: data?.customerName || "",
     status: data?.status || "",
-  };
-
-  const [state, dispatch] = useReducer(reducer, initialState);
+  })
+);
 
   const updateNodeData = useCallback(
     (field, value) => {
@@ -78,7 +87,7 @@ function ProductionOrder({ id, data }) {
             />
           </div>
           <button
-            onClick={() => setToggle(!toggle)}
+            onClick={toggleDetails}
             className={` transition-transform duration-600 
     ${toggle ? "rotate-180" : "rotate-0"}
   `}
@@ -153,4 +162,4 @@ function ProductionOrder({ id, data }) {
   );
 }
 
-export default ProductionOrder;
+export default React.memo(ProductionOrder);

@@ -364,8 +364,7 @@ export const initialNodes = [
         "id": "15",
         "type": "finalProduct",
         "position": {
-            "x": 700,
-            "y": 350
+            "x": 3838.9121723309577, "y": 375.7639849986125
         },
         "data": {
             "itemName": "",
