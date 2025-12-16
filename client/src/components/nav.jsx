@@ -15,7 +15,6 @@ function Nav(){
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 flex-shrink-0 hover:opacity-80 transition-opacity">
           <h1 className="text-2xl md:text-3xl text-blue-600 font-extrabold">MES</h1>
-          <span className="hidden sm:block text-xs md:text-sm text-slate-600 font-medium">Pro</span>
         </Link>
         
         {/* Hamburger Menu Button - Mobile Only */}
