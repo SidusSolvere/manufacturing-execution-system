@@ -85,10 +85,9 @@ export default function WorkPlace() {
   };
 
   return (
-    <div ref={fullscreenRef} className="h-full w-full relative">
+    <div ref={fullscreenRef} className="w-full h-full min-h-[calc(100vh-200px)] md:min-h-[calc(100vh-180px)] flex flex-col  bg-slate-50">
       <ReactFlow
         onlyRenderVisibleElements={true}
-
         maxZoom={2}
         minZoom={0.1}
         nodes={nodes}
