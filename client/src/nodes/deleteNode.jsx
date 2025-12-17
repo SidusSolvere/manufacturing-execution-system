@@ -1,8 +1,7 @@
-import { useReactFlow, useNodeId } from "@xyflow/react";
+import { useReactFlow } from "@xyflow/react";
 import { CircleX } from 'lucide-react';
-export default function DeleteButton() {
+export default function DeleteButton({nodeId}) {
   const { deleteElements, getNode } = useReactFlow();
-  const nodeId = useNodeId();   
 
   const handleDelete = () => {
     const node = getNode(nodeId);
@@ -10,7 +9,6 @@ export default function DeleteButton() {
       deleteElements({ nodes: [node] });
     }
   };
-console.log(nodeId);
 
   return (
     <button

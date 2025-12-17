@@ -1,78 +1,70 @@
 import { useState } from "react";
 import { backgroundColor } from "./backgroundTheme/background";
 import { color } from "./backgroundTheme/color";
-import { variant } from "./backgroundTheme/variant";
+import { ChevronDown } from "lucide-react";
 
-export default function ThemePopup({
+export default function ThemeRibbonContent({
   bgColorKey,
   setBgColorKey,
   colorKey,
   setColorKey,
-  variantKey,
-  setVariantKey
 }) {
+  return (
+    <div className="flex gap-6">
+      <ColorDropdown
+        label="Background"
+        value={bgColorKey}
+        colors={backgroundColor}
+        onChange={setBgColorKey}
+        hoverClass="hover:bg-blue-200"
+      />
+
+      <ColorDropdown
+        label="Accent"
+        value={colorKey}
+        colors={color}
+        onChange={setColorKey}
+        hoverClass="hover:bg-blue-200"
+      />
+    </div>
+  );
+}
+
+function ColorDropdown({ label, value, colors, onChange, hoverClass }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="relative z-10">
-
+    <div className="relative">
       <button
-        onClick={() => setOpen(!open)}
-        className="bg-gray-100 text-xl font-bold text-blue-800 rounded-b-2xl p-4 shadow-2xl hover:bg-gray-200"
+        onClick={() => setOpen((o) => !o)}
+        className={`flex flex-col items-center w-24 p-2 rounded-2xl transition-colors ${hoverClass}`}
       >
-        View
+        <div
+          className="w-6 h-6 rounded-full border mb-1"
+          style={{ background: colors[value] }}
+        />
+
+        <span className="text-xs font-medium">{label}</span>
+
+        <ChevronDown size={12} className="text-gray-600 mt-1" />
       </button>
 
       {open && (
-        <div className="absolute mt-2 bg-white shadow-xl rounded-lg p-4 w-64 space-y-4 border border-gray-200">
-
-          <div>
-            <label className="font-medium">Background Color</label>
-            <select
-              className="border w-full p-2 rounded mt-1"
-              onChange={(e) => setBgColorKey(e.target.value)}
-              value={bgColorKey}
-            >
-              {Object.keys(backgroundColor).map((key) => (
-                <option key={key} value={key}>{key}</option>
-              ))}
-            </select>
-
-            <div
-              className="w-full h-6 mt-1 rounded border"
-              style={{ background: backgroundColor[bgColorKey] }}
-            ></div>
-          </div>
-
-          <div>
-            <label className="font-medium">Node Accent Color</label>
-            <select
-              className="border w-full p-2 rounded mt-1"
-              onChange={(e) => setColorKey(e.target.value)}
-              value={colorKey}
-            >
-              {Object.keys(color).map((key) => (
-                <option key={key} value={key}>{key}</option>
-              ))}
-            </select>
-
-            <div
-              className="w-full h-6 mt-1 rounded border"
-              style={{ background: color[colorKey] }}
-            ></div>
-          </div>
-
-          <div>
-            <label className="font-medium">Background Variant</label>
-            <select
-              className="border w-full p-2 rounded mt-1"
-              onChange={(e) => setVariantKey(e.target.value)}
-              value={variantKey}
-            >
-              {Object.keys(variant).map((key) => (
-                <option key={key} value={key}>{key}</option>
-              ))}
-            </select>
+        <div className="absolute top-full left-0 mt-2 bg-white border shadow-xl rounded-xl p-2 w-40 z-50">
+          <div className="grid grid-cols-3 gap-2">
+            {Object.keys(colors).map((key) => (
+              <button
+                key={key}
+                onClick={() => {
+                  onChange(key);
+                  setOpen(false);
+                }}
+                className={`w-8 h-8   hover:scale-110 transition
+                  ${key === value ? "ring-2 ring-black/25" : ""}
+                `}
+                style={{ background: colors[key] }}
+              />
+            ))}
           </div>
         </div>
       )}

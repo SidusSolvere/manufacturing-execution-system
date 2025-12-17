@@ -74,6 +74,8 @@ const [state, dispatch] = useReducer(
   const targetId = connections.find((c) => c.source === id)?.target;
   const targetData = useNodesData(targetId);
   const sourceData = useNodesData(sourceId);
+  const [statCol,setStatCol] = useState(true);
+
   useEffect(() => {
     if (!sourceData || sourceData.type !== "inventory") return;
 
@@ -109,6 +111,7 @@ const [state, dispatch] = useReducer(
 
       if (targetRate > rate) {
         status = "Bottleneck in this node";
+        setStatCol("red");
       }
     }
 
@@ -170,8 +173,14 @@ const [state, dispatch] = useReducer(
     const time = `${weeks} weeks ${days} days ${hours} hours ${minutes} minutes`;
 
     let status = "";
-    if (sourceRate < nodeRate) status = "Bottleneck in previous node";
-    else if (sourceRate > nodeRate) status = "Bottleneck in this node";
+    if (sourceRate < nodeRate) {
+      setStatCol("yellow");
+      status = "Bottleneck in previous node";}
+    else if (sourceRate > nodeRate) {
+            setStatCol("red");
+
+      status = "Bottleneck in this node";}
+
 
     dispatch({ time, total, status, totalTimeHours });
 
@@ -201,7 +210,8 @@ const [state, dispatch] = useReducer(
 
         </div>
         <div className="absolute right-4 top-4">
-          <DeleteButton />
+          <DeleteButton nodeId={id} />
+
         </div>
         <div className="p-4 bg-white rounded-2xl shadow-lg flex flex-col gap-3">
           <div className="flex flex-col">
@@ -236,8 +246,9 @@ const [state, dispatch] = useReducer(
             </div>
           </div>
           <div className="flex">
-            <div>Status:</div>
-            <div className="rounded-full bg-gray-400 px-3 text-white">
+            <div >Status:</div>
+            <div className={`rounded-full mx-2 px-3 text-white
+            ${statCol==="yellow"?"bg-yellow-500" :statCol==="red"?"bg-red-500":statCol==="null"?"bg-gray-400":"bg-gray-400"}`}>
               {state.status}
             </div>
             <div className="absolute right-4">

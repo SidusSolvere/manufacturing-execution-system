@@ -5,9 +5,9 @@ import {
   useNodeConnections,
   useNodesData,
 } from "@xyflow/react";
-import React,{ useCallback, useReducer, useEffect } from "react";
+import React, { useCallback, useReducer, useEffect } from "react";
 import DeleteButton from "./deleteNode";
-import { CircleChevronRight } from "lucide-react";
+import { CircleChevronRight,CircleAlert ,CircleCheckBig} from "lucide-react";
 import DuplicateNode from "./duplicateNode";
 
 const UNITS = {
@@ -17,7 +17,6 @@ const UNITS = {
   pallet: { label: "Pallet", amount: 60000 },
   drum: { label: "Drum", amount: 200 },
 };
-
 
 function reducer(state, action) {
   return { ...state, ...action };
@@ -31,20 +30,18 @@ function Inventory({ id, data }) {
 
   const totalRequired = Number(sourceNode?.data?.totalRequired || 0);
 
-  const [state, dispatch] = useReducer(reducer, null, ()=>({
+  const [state, dispatch] = useReducer(reducer, null, () => ({
     currentStock: data?.currentStock || 0,
-  reservedStock: data?.reservedStock || 0,
-  unit: data?.unit || "box",
-  status: data?.status || "",
-  total: data?.total || 0,
-
+    reservedStock: data?.reservedStock || 0,
+    unit: data?.unit || "box",
+    status: data?.status || "",
+    total: data?.total || 0,
   }));
 
   const multiplier = UNITS[state.unit].amount;
   const finalStock = state.currentStock * multiplier;
   const effectiveStock = finalStock * (1 - state.reservedStock / 100);
-  const status =
-    effectiveStock - totalRequired >= 0 ? "Sufficient" : "Insufficient";
+  const isSufficient = effectiveStock - totalRequired >= 0;
 
   const updateNode = useCallback(
     (patch) => {
@@ -74,7 +71,7 @@ function Inventory({ id, data }) {
         <DuplicateNode NodeId={id} />
       </div>
       <div className="absolute right-4 top-4">
-        <DeleteButton />
+        <DeleteButton nodeId={id} />
       </div>
       <div className="p-4 bg-gray-50 rounded-2xl shadow-lg flex flex-col gap-3">
         <div className="flex flex-col">
@@ -116,8 +113,22 @@ function Inventory({ id, data }) {
           </div>
           <div className="flex flex-col p-1">
             <label>Status: </label>
-            <label className="rounded-full bg-gray-400 px-3 text-white">
-              {status}
+            <label
+              className={`flex items-center gap-1 rounded-full px-3 py-1 text-sm font-medium text-white
+    ${isSufficient ? "bg-green-500" : "bg-red-500"}
+  `}
+            >
+              {isSufficient ? (
+                <>
+                  <CircleCheckBig className="h-4 w-4" />
+                  Sufficient
+                </>
+              ) : (
+                <>
+                  <CircleAlert className="h-4 w-4" />
+                  Insufficient
+                </>
+              )}
             </label>
           </div>
         </div>

@@ -110,7 +110,8 @@ function Assembly({ id, data }) {
         <DuplicateNode NodeId={id} />
       </div>
       <div className="absolute right-4 top-4">
-        <DeleteButton />
+        <DeleteButton nodeId={id} />
+
       </div>
       <div className="p-4 bg-white rounded-2xl shadow-lg ">
         <div className="flex gap-3 ">

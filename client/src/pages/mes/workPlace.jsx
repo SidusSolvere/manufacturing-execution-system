@@ -8,7 +8,6 @@ import FinalProduct from "../../nodes/finalProduct";
 
 import { backgroundColor } from "./backgroundTheme/background";
 import { color } from "./backgroundTheme/color";
-import { variant } from "./backgroundTheme/variant";
 
 import Ribbon from "./ribbon";
 import { Maximize2, Minimize2 } from "lucide-react";
@@ -47,7 +46,6 @@ export default function WorkPlace() {
 
   const [bgColorKey, setBgColorKey] = useState("white");
   const [colorKey, setColorKey] = useState("dark");
-  const [variantKey, setVariantKey] = useState("dots");
 
   const onNodesChange = useCallback(
     (changes) => setNodes((state) => applyNodeChanges(changes, state)),
@@ -122,14 +120,14 @@ export default function WorkPlace() {
           setBgColorKey={setBgColorKey}
           colorKey={colorKey}
           setColorKey={setColorKey}
-          variantKey={variantKey}
-          setVariantKey={setVariantKey}
+         
         />
 
         <Background
           color={color[colorKey]}
           bgColor={backgroundColor[bgColorKey]}
-          variant={variant[variantKey]}
+          size={2}
+          
         />
 
         <Controls className="scale-90">

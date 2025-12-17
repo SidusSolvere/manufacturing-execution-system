@@ -61,7 +61,8 @@ const [state, dispatch] = useReducer(
         <DuplicateNode NodeId={id} />
       </div>
       <div className="absolute right-4 top-4">
-        <DeleteButton />
+        <DeleteButton nodeId={id} />
+
       </div>
       <div className="relative rounded-3xl p-4 bg-gray-50 ">
         <div className="flex ">
