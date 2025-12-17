@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Zap, Layout, Users, TrendingUp } from 'lucide-react';
+import { ArrowRight, Zap, Layout, Users, TrendingUp, BarChart3, Package, Layers } from 'lucide-react';
 
 function Home() {
   return (
@@ -32,12 +32,17 @@ function Home() {
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 mb-4">Powerful Features</h2>
             <p className="text-lg text-slate-600 max-w-2xl mx-auto">Everything you need to streamline your manufacturing operations</p>
           </div>
+          {/* Core Manufacturing Features - Expanded to 8 capabilities */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
             {[
-              { icon: TrendingUp, title: 'Real-Time Tracking', desc: 'Monitor production progress and get instant updates' },
-              { icon: Layout, title: 'Gantt Scheduling', desc: 'Visualize and optimize production schedules' },
-              { icon: Zap, title: 'Workflow Builder', desc: 'Create custom workflows for your operations' },
-              { icon: Users, title: 'User Management', desc: 'Control access and manage team permissions' }
+              { icon: TrendingUp, title: 'Real-Time Tracking', desc: 'Monitor production progress with instant status updates and live visibility' },
+              { icon: Layout, title: 'Gantt Scheduling', desc: 'Visualize timelines and optimize resource allocation across operations' },
+              { icon: Zap, title: 'Workflow Builder', desc: 'Design custom manufacturing processes visually without coding knowledge' },
+              { icon: Users, title: 'User Management', desc: 'Control access and manage team permissions with role-based security' },
+              { icon: BarChart3, title: 'Cost Optimization', desc: 'Analyze material, labor, and equipment expenses for better decisions' },
+              { icon: Package, title: 'Inventory Management', desc: 'Track stock levels in real-time and predict supply chain shortages' },
+              { icon: Layers, title: 'Production Orders', desc: 'Create, manage, and track orders from initial request to fulfillment' },
+              { icon: Zap, title: 'Multi-Stage Processing', desc: 'Handle assembly and product finalization with advanced workflow control' }
             ].map((feature, i) => {
               const Icon = feature.icon;
               return (
