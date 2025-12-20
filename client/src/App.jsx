@@ -13,10 +13,10 @@ import WorkPlace from './pages/mes/workPlace.jsx';
 
 function App() {
   return (
-    <div className="flex flex-col min-h-screen bg-slate-50 h-full w-full">
+    <div className="flex flex-col min-h-screen bg-linear-to-r from-white to-blue-200 h-full w-full">
       <Nav />
 
-  <main className="flex-1 w-full">
+  <main className="flex-1 w-full ">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
