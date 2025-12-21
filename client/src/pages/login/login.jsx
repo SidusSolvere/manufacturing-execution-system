@@ -1,15 +1,28 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { loginUser } from '../../API/authApi'; 
+import { useNavigate } from 'react-router-dom';
+
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Login:', { email});
+    try {
+      const data = await loginUser({ email, password });
+      console.log('Logged in', data);
+      navigate('/');
+    } catch (err) {
+      console.error('Login failed', err);
+      alert(err.message || 'Login failed');
+    }
   };
+
 
   return (
     <div className="min-h-screen bg-linear-to-br from-gray-100 to-blue-200 flex items-center justify-center p-4">
@@ -55,4 +68,4 @@ function Login() {
   );
 }
 
-export default Login
+export default Login;

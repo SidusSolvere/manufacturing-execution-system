@@ -1,11 +1,47 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Workflow, Settings, Box } from "lucide-react";
 import FluidGlass from "./FluidGlass";
+import { getSession, logoutUser } from "@/API/authApi";
 
 function Nav() {
   const [isOpen, setIsOpen] = useState(false);
+  const [session, setSession] = useState(null);
+  useEffect(() => {
+    getSession()
+      .then(setSession)
+      .catch(() => setSession(null));
+    
+  }, []);
+  const isAdmin = session?.companyRole === "ADMIN";
+  const isSuperAdmin = session?.companyRole === "SUPER_ADMIN";
+console.log("Session in Nav:", session);
+  const [isDark, setIsDark] = useState(false);
+  const navigate = useNavigate();
+
+  // 🔐 Check session on mount
+  
+
+  // Load theme preference
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+    setIsDark(savedTheme === "dark");
+  }, []);
+
+
+  // 🚪 Logout handler
+  const handleLogout = async () => {
+    try {
+      await logoutUser();
+      navigate("/login");
+    } catch (err) {
+      console.error("Logout failed", err);
+    }
+  };
+
+  const navLinkStyle = "px-4 py-2 text-sm font-medium transition-all duration-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200";
+  const authButtonStyle = "px-4 py-2 text-sm font-medium transition-all duration-200 rounded-md";
 
   const buttonStyle =
     "text-2xl px-3 py-2 rounded-full text-grey-600 font-medium hover:text-blue-800 transition-all duration-300 text-sm md:text-base  hover:bg-white/30 hover:backdrop-blur-3xl";
@@ -61,26 +97,56 @@ function Nav() {
             <Link className={buttonStyle} to="/demo">
               Demo
             </Link>
+            {session && (isAdmin || isSuperAdmin) && (
+              <Link className={navLinkStyle} to="/admin/projects">
+                Admin Dashboard
+              </Link>
+              
+            )}
+            {session && (isAdmin || isSuperAdmin) && (
+              <Link className={navLinkStyle} to="/admin/pending-users">Pending Users</Link>
+              
+            )}
+            {session && isSuperAdmin && (
+              <Link className={navLinkStyle} to="/superadmin">
+                Super Admin
+              </Link>
+            )}
             <Link className={buttonStyle} to="/contact">
               Contact
             </Link>
             <Link className={buttonStyle} to="/companyRegister">
               Company Reg
             </Link>
-            <div className="flex gap-2 ml-4 pl-4 border-l border-slate-200">
-              <Link
-                className="px-4 py-2 text-slate-700 font-medium hover:text-blue-600 transition-all duration-300 text-sm md:text-base rounded-lg border border-slate-300 hover:border-blue-600"
-                to="/login"
+            {!session ? (
+              <>
+                <Link
+                  className={`${authButtonStyle} text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800`}
+                  to="/companyRegister"
+                >
+                  Company Reg
+                </Link>
+                <Link
+                  className={`${authButtonStyle} text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800`}
+                  to="/login"
+                >
+                  Login
+                </Link>
+                <Link
+                  className={`${authButtonStyle} bg-blue-600 text-white hover:bg-blue-700`}
+                  to="/signup"
+                >
+                  Sign Up
+                </Link>
+              </>
+            ) : (
+              <button
+                onClick={handleLogout}
+                className={`${authButtonStyle} text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20`}
               >
-                Login
-              </Link>
-              <Link
-                className="px-4 py-2 bg-blue-600 text-white font-medium hover:bg-blue-700 transition-all duration-300 text-sm md:text-base rounded-lg"
-                to="/signup"
-              >
-                Sign Up
-              </Link>
-            </div>
+                Logout
+              </button>
+            )}
           </div>
         </nav>
 

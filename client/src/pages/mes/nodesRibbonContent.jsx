@@ -1,7 +1,6 @@
 import { useRef } from "react";
 import { useReactFlow } from "@xyflow/react";
-import nodeTemplates from "../../nodes/initialNodes";
-import IdCount from "./idUpdate";
+
 import {
   ClipboardClock,
   Boxes,
@@ -13,23 +12,40 @@ import {
   PackageOpen,
 } from "lucide-react";
 
-function NodesRibbonContent() {
-  const { setNodes } = useReactFlow();
-  const idIncrement = useRef(IdCount);
+function NodesRibbonContent( socketRef, isCollaborative, activeProjectId ) {
 
-  const addNode = (type, x, y) => {
-    const newId = idIncrement.current++;
-    const defaultData = JSON.parse(JSON.stringify(nodeTemplates[type].data));
 
-    setNodes((prev) => [
-      ...prev,
-      {
-        id: String(newId),
-        type,
-        position: { x, y },
-        data: defaultData,
-      },
-    ]);
+  const { getNodes,setNodes,getEdges } = useReactFlow();
+  
+  const getNextId = () => {
+      const nodes = getNodes();
+      if (!nodes.length) return "1";
+
+      const maxId = Math.max(...nodes.map(n => Number(n.id)));
+      return String(maxId + 1);
+    };
+  const addNode = (type) => {
+    const newNode = {
+      id: getNextId(),
+      type,
+      position: { x: 100, y: 100 },
+      data: {},
+    };
+
+    setNodes((prev) => {
+      const updated = [...prev, newNode];
+
+      if (isCollaborative && socketRef.current && activeProjectId) {
+        socketRef.current.emit("nodes:update", {
+          projectId: activeProjectId,
+          nodes: updated,
+        });
+        console.log('Emitted new nodes via socket:', updated);
+      }
+       console.log("Updated nodes:", updated);
+      console.log("Edges:", getEdges());
+      return updated;
+    });
   };
 
   return (

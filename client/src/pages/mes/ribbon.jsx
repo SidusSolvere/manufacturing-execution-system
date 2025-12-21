@@ -7,6 +7,15 @@ function Ribbon({
   setBgColorKey,
   colorKey,
   setColorKey,
+  variantKey,
+  setVariantKey,
+  projects,
+  activeProjectId,
+  onSelectProject,
+  onSaveProject,
+  isCollaborative,
+  onToggleCollaborative,
+  socketRef
 }) {
   const [activeTab, setActiveTab] = useState(null);
 
@@ -28,11 +37,40 @@ function Ribbon({
             setActiveTab(activeTab === "theme" ? null : "theme")
           }
         />
+        <select
+  className="border px-2 py-1 rounded text-sm"
+  value={activeProjectId || ""}
+  onChange={(e) => onSelectProject(e.target.value)}
+>
+  <option value="">Select Project</option> {/* ✅ ADD THIS */}
+  {projects.map((p) => (
+    <option key={p._id} value={p._id}>
+      {p.name}
+    </option>
+  ))}
+</select>
+
+
+      <button
+        onClick={onSaveProject}
+        className="bg-blue-600 text-white px-3 py-1 rounded text-sm"
+      >
+        Save
+      </button>
+
+      <button
+        onClick={() => onToggleCollaborative(!isCollaborative)}
+        className={`px-3 py-1 rounded text-sm ${
+          isCollaborative ? "bg-green-600 text-white" : "bg-gray-200"
+        }`}
+      >
+        {isCollaborative ? "Collaborative ON" : "Collaborative OFF"}
+      </button>
       </div>
 
       {activeTab && (
         <div className="px-4 py-3 border-b bg-gray-100">
-          {activeTab === "nodes" && <NodesRibbonContent />}
+          {activeTab === "nodes" && <NodesRibbonContent socketRef={socketRef} isCollaborative={isCollaborative} activeProjectId={activeProjectId} />}
 
           {activeTab === "theme" && (
             <ThemeRibbonContent

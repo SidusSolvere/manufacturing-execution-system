@@ -39,12 +39,8 @@ function Home() {
           <div className="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center">
             
              
-            <Link
-              to="/login"
-              className="bg-blue-800 hover:bg-blue-900 text-white px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold text-base md:text-lg transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 border border-blue-500"
-            >
-              Get Started
-            </Link>
+            <Link to="/login" className="bg-transparent text-white border border-white px-6 md:px-8 py-3 md:py-4 rounded-full font-bold text-base md:text-lg transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 hover:bg-white hover:text-black">Get Started</Link>
+
           </div>
         </div>
       </section>

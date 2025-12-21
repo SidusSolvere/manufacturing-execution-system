@@ -1,52 +1,58 @@
 
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { registerCompany } from "../../API/authApi"; 
+
 function Register() {
-  // 1. State Initialization (Individual states kept as requested)
   const [companyEmail, setCompanyEmail] = useState("");
   const [company, setCompany] = useState("");
-  // State for Company ID context: would be used for sorting through company data in
   const [idType, setIdType] = useState("Select"); 
   const [companyId, setCompanyId] = useState(""); 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  let companyExists = false; // Flag maintained for existing logic
+  let companyExists = false; 
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (idType === "Select") {
+    alert("Please select the idType!");
+    return;
+  }
+  if (password !== confirmPassword) {
+    alert("Passwords do not match.");
+    return;
+  }
+  if (companyExists) {
+    alert("company already registered");
+    return;
+  }
 
-  // 2. Submission & Validation Logic
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    
-    if(idType==="Select"){
-
-      alert("Please select the idType!");
-      return;
-    }
-    // Password match check
-    if (password !== confirmPassword) {
-      alert("Passwords do not match.");
-      return;
-    }
-    // Company existence check
-    if (companyExists) {
-      alert("company already registered");
-      return;
-    }
-    
-    // Log new MES registration fields
-    console.log("Signup:", { companyEmail, company, idType, companyId });
-
-    // 3. Solution: Resetting all states after successful submission
-    setCompanyEmail("");
-    setCompany("");
-    setIdType("Select"); // Reset to default value
-    setCompanyId("");
-    setPassword("");
-    setConfirmPassword("");
+  try {
+    const payload = {
+      companyName: company,
+      companyEmail,
+      idType,
+      companyId,
+      password
+    };
+    const res = await registerCompany(payload);
+    console.log('Company registration success', res);
+    alert('Company registered successfully. You can now log in with the admin email.');
+    setCompanyEmail('');
+    setCompany('');
+    setIdType('Select');
+    setCompanyId('');
+    setPassword('');
+    setConfirmPassword('');
     setShowPassword(false);
     setShowConfirmPassword(false);
-  };
+  } catch (err) {
+    console.error('Company registration failed', err,company,companyEmail,idType,companyId,password,confirmPassword);
+    alert(err.message || 'Company registration failed');
+  }
+};
+
 
   return (
     <div className="min-h-screen bg-linear-to-br from-gray-100 to-blue-200 flex items-center justify-center px-4 py-8 sm:py-12">
