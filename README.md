@@ -12,7 +12,7 @@ A full-stack, Industry 4.0–oriented **Manufacturing Execution System** built u
 [![Share](https://img.shields.io/badge/Share-Telegram-0088CC?logo=telegram&logoColor=white)](https://t.me/share/url?url=https://github.com/SidusSolvere/manufacturing-execution-system&text=Check%20out%20this%20Manufacturing%20Execution%20System%20built%20with%20MERN)
 
 
-<img alt="Awesome GitHub Profile Readme" src="/Users/sidlahiri/Desktop/programs/Web_dev/INT222Project/manufacturing-execution-system/assets/Flow.gif"> </img>
+<img  src="./assets/Flow.gif"> </img>
 ---
 
 ##  Project Overview
