@@ -9,7 +9,6 @@ A full-stack, Industry 4.0–oriented **Manufacturing Execution System** built u
 [![Share](https://img.shields.io/badge/Share-LinkedIn-0A66C2?logo=linkedin&logoColor=white)](https://www.linkedin.com/sharing/share-offsite/?url=https://github.com/SidusSolvere/manufacturing-execution-system)
 [![Share](https://img.shields.io/badge/Share-X-000000?logo=x&logoColor=white)](https://x.com/intent/tweet?text=Check%20out%20this%20Manufacturing%20Execution%20System%20built%20with%20MERN:%20https://github.com/SidusSolvere/manufacturing-execution-system)
 [![Share](https://img.shields.io/badge/Share-Reddit-FF4500?logo=reddit&logoColor=white)](https://www.reddit.com/submit?title=Manufacturing%20Execution%20System%20(MES)&url=https://github.com/SidusSolvere/manufacturing-execution-system)
-[![Share](https://img.shields.io/badge/Share-Telegram-0088CC?logo=telegram&logoColor=white)](https://t.me/share/url?url=https://github.com/SidusSolvere/manufacturing-execution-system&text=Check%20out%20this%20Manufacturing%20Execution%20System%20built%20with%20MERN)
 
 
 <img  src="./assets/Flow.gif"> </img>
